@@ -1,0 +1,7 @@
+<resources>
+	<color name="custom_color">
+		#4546BE
+	</color>
+	<!-- Replace with your desired color code -->
+	<color name="ic_launcher_background">#4546BE</color>
+</resources>
