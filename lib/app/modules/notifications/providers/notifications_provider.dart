@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:perfect_elegance/app/data/providers/api_provider.dart';
 
-class CustomerProvider extends ApiProvider {
+class NotificationsProvider extends ApiProvider {
   // NOTE :- Post Send Notifications
   Future<Map<String, dynamic>?> postSendNotifications(
       {required String userId,
