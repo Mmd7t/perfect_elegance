@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:perfect_elegance/app/data/constants/constants.dart';
 import 'package:perfect_elegance/app/data/extensions/extensions.dart';
+import 'package:perfect_elegance/app/modules/main/controllers/main_controller.dart';
 import 'package:perfect_elegance/app/modules/main/widgets/analysis_card.dart';
 import 'package:perfect_elegance/app/modules/main/widgets/circular_chart_widget.dart';
 import 'package:perfect_elegance/app/modules/main/widgets/home_appbar.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-class HomeView extends StatelessWidget {
+class HomeView extends GetView<MainController> {
   const HomeView({super.key});
 
   @override
@@ -51,18 +52,19 @@ class HomeView extends StatelessWidget {
                     child: "التحليلات".titleSmall(),
                   ),
                   const SizedBox(height: 10),
-                  const Row(
+                  Row(
                     children: [
                       Expanded(
                         child: AnalysisCard(
                           color: Constants.primary,
                           icon: "new-orders",
                           title: "الطلبات الجديدة",
-                          number: "10",
+                          number:
+                              controller.homeModel.value.newOrders.toString(),
                         ),
                       ),
-                      SizedBox(width: 15),
-                      Expanded(
+                      const SizedBox(width: 15),
+                      const Expanded(
                         child: AnalysisCard(
                           color: Constants.success,
                           icon: "hourglass",

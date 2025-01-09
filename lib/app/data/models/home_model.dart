@@ -4,7 +4,7 @@ class HomeModel {
   int? ongoingOrders;
   int? pendingOrdersCount;
   int? underSattelmentProductOrders;
-  List<int>? salesData;
+  List<dynamic>? salesData;
 
   HomeModel({
     this.storeBalance,
@@ -22,7 +22,7 @@ class HomeModel {
         pendingOrdersCount: json['pending_orders_count'] as int?,
         underSattelmentProductOrders:
             json['under_sattelment_product_orders'] as int?,
-        salesData: json['salesData'] as List<int>?,
+        salesData: json['salesData'] as List<dynamic>?,
       );
 
   Map<String, dynamic> toJson() => {

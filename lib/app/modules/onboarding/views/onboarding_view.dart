@@ -65,6 +65,7 @@ class OnboardingView extends GetView<OnboardingController> {
                     curve: Curves.easeIn,
                   );
                 } else {
+                  controller.appServices.setIsFirstTime(false);
                   Get.offNamed(Routes.login);
                 }
               },

@@ -69,7 +69,7 @@ class AuthProvider extends ApiProvider {
 
   // NOTE :- Post Reset Pass OTP
   Future<int?> postResetPassOtp({required String email}) async {
-    Response<Map<String, dynamic>?> res = await post<Map<String, dynamic>?>(
+    Response<String?> res = await post<String?>(
       'forget-password',
       {
         'email': email,

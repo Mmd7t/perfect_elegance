@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:perfect_elegance/app/data/services/app_services.dart';
 import 'package:perfect_elegance/app/modules/onboarding/widgets/onboarding_part.dart';
 
 class OnboardingController extends GetxController {
+  final AppServices appServices = Get.find<AppServices>();
   final List<Widget> onboardingpages = [
     const OnboardingPart(
       title: "تابع متجرك بسهولة",

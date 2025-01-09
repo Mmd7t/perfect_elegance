@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:perfect_elegance/app/data/models/home_model.dart';
 import 'package:perfect_elegance/app/modules/main/views/home_view.dart';
 import 'package:perfect_elegance/app/modules/profile/views/profile_view.dart';
 import 'package:perfect_elegance/app/modules/requests/views/requests_view.dart';
 import 'package:perfect_elegance/app/modules/settlements/views/settlements_view.dart';
 import 'package:perfect_elegance/app/modules/shipments/views/shipments_view.dart';
 
+import '../../../core/theme/theme.dart';
+import '../providers/home_provider.dart';
+
 class MainController extends GetxController with GetTickerProviderStateMixin {
+  final HomeProvider provider = Get.find<HomeProvider>();
   AnimationController? animationController;
   Animation? animation,
       animation2,
@@ -65,5 +70,24 @@ class MainController extends GetxController with GetTickerProviderStateMixin {
     sizeAnimation2 = Tween(begin: 1.0, end: 0.55).animate(
       CurvedAnimation(parent: animationController!, curve: Curves.easeInOut),
     );
+  }
+
+  Rx<HomeModel> homeModel = HomeModel().obs;
+  RxBool isLoading = false.obs;
+  getHomeData() async {
+    isLoading.value = true;
+    final Map<String, dynamic>? res = await provider.getHomeData();
+    isLoading.value = false;
+    if (res != null) {
+      if (res['code'] == 200) {
+        homeModel.value = HomeModel.fromJson(res['data']);
+      } else {}
+    } else {}
+  }
+
+  @override
+  void onReady() {
+    super.onReady();
+    getHomeData();
   }
 }

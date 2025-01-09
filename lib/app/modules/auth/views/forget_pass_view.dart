@@ -26,17 +26,35 @@ class ForgetPassView extends GetView<AuthController> {
                       .title(),
             ),
             const SizedBox(height: 80),
-            const GlobalTextField(
-              hintText: "test@example.com",
-              title: "البريد الالكتروني",
-              inputType: TextInputType.emailAddress,
-              textInputAction: TextInputAction.next,
+            Form(
+              key: controller.forgetPassFormKey,
+              child: GlobalTextField(
+                hintText: "test@example.com",
+                title: "البريد الالكتروني",
+                inputType: TextInputType.emailAddress,
+                textInputAction: TextInputAction.next,
+                onSaved: (value) {
+                  controller.email.value = value!;
+                },
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return "من فضلك أدخل البريد الإلكتروني";
+                  } else if (!value.isEmail) {
+                    return "من فضلك أدخل بريد إلكتروني صحيح";
+                  } else {
+                    return null;
+                  }
+                },
+              ),
             ),
             const Spacer(),
             GlobalButton(
               onTap: () {
                 controller.appServices.isSignup.value = false;
-                Get.toNamed(Routes.otpCode);
+                if (controller.forgetPassFormKey.currentState!.validate()) {
+                  controller.forgetPassFormKey.currentState!.save();
+                  controller.forgetPassword();
+                }
               },
               text: "استمرار",
               width: Get.width,

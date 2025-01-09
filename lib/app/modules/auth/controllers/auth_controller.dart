@@ -10,6 +10,7 @@ class AuthController extends GetxController {
   final AuthProvider provider = Get.find<AuthProvider>();
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> forgetPassFormKey = GlobalKey<FormState>();
 
   RxString email = ''.obs;
   RxString password = ''.obs;
@@ -28,6 +29,18 @@ class AuthController extends GetxController {
       if (res['code'] == 200) {
         appServices.saveAccessToken(res['data']['token']);
         Get.offNamed(Routes.main);
+      } else {}
+    } else {}
+  }
+
+  forgetPassword() async {
+    Ui.loadingDialog();
+    final int? res = await provider.postResetPassOtp(email: email.value);
+    Get.back();
+    if (res != null) {
+      if (res == 200) {
+        // appServices.saveAccessToken(res['data']['token']);
+        Get.toNamed(Routes.otpCode);
       } else {}
     } else {}
   }

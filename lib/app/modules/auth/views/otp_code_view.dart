@@ -57,12 +57,14 @@ class _OtpCodeViewState extends State<OtpCodeView> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Expanded(
-              flex: 3,
+              flex: 4,
               child: Form(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    'emailillu.png'.assetImage,
+                    SizedBox(
+                        width: Get.width * 0.7,
+                        child: 'emailillu.png'.assetImage),
                     const SizedBox(height: 25),
                     SizedBox(
                       width: Get.width,
