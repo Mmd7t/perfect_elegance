@@ -108,7 +108,8 @@ class Ui {
                 ),
               ),
               const SizedBox(width: 5),
-              Lottie.asset('assets/lotties/loader.json', width: 80),
+              // Lottie.asset('assets/lotties/loader.json', width: 80),
+              const CircularProgressIndicator()
             ],
           ),
         ),
