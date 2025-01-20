@@ -5,10 +5,9 @@ import 'package:perfect_elegance/app/core/widgets/global_appbar.dart';
 import 'package:perfect_elegance/app/core/widgets/global_button.dart';
 import 'package:perfect_elegance/app/core/widgets/global_textfield.dart';
 import 'package:perfect_elegance/app/data/extensions/extensions.dart';
-import 'package:perfect_elegance/app/modules/auth/controllers/auth_controller.dart';
-import 'package:perfect_elegance/app/routes/app_pages.dart';
+import 'package:perfect_elegance/app/modules/auth/controllers/otp_controller.dart';
 
-class ForgetPassView extends GetView<AuthController> {
+class ForgetPassView extends GetView<OtpController> {
   const ForgetPassView({super.key});
   @override
   Widget build(BuildContext context) {

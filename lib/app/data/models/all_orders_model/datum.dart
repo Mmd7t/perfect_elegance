@@ -1,6 +1,6 @@
 import 'user.dart';
 
-class Datum {
+class OrderDatum {
   int? id;
   User? user;
   String? status;
@@ -8,7 +8,7 @@ class Datum {
   dynamic address;
   int? productsCount;
 
-  Datum({
+  OrderDatum({
     this.id,
     this.user,
     this.status,
@@ -17,7 +17,7 @@ class Datum {
     this.productsCount,
   });
 
-  factory Datum.fromJson(Map<String, dynamic> json) => Datum(
+  factory OrderDatum.fromJson(Map<String, dynamic> json) => OrderDatum(
         id: json['id'] as int?,
         user: json['user'] == null
             ? null

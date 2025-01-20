@@ -36,7 +36,6 @@ class AuthProvider extends ApiProvider {
     required String storelink,
     required String passportNumber,
     required String idNumber,
-    required String license,
     required String email,
     required String password,
   }) async {
@@ -50,7 +49,7 @@ class AuthProvider extends ApiProvider {
         'storelink': storelink,
         'passport_number': passportNumber,
         'id_number': idNumber,
-        'license': license,
+        'license': true,
         'email': email,
         'password': password,
       },
@@ -68,8 +67,9 @@ class AuthProvider extends ApiProvider {
   }
 
   // NOTE :- Post Reset Pass OTP
-  Future<int?> postResetPassOtp({required String email}) async {
-    Response<String?> res = await post<String?>(
+  Future<Map<String, dynamic>?> postResetPassOtp(
+      {required String email}) async {
+    Response<Map<String, dynamic>?> res = await post<Map<String, dynamic>?>(
       'forget-password',
       {
         'email': email,
@@ -80,16 +80,19 @@ class AuthProvider extends ApiProvider {
       return null;
     } else {
       Get.log(res.statusCode.toString());
-      return res.statusCode!;
+      return {
+        'code': res.statusCode!,
+        'data': res.body as Map<String, dynamic>,
+      };
     }
   }
 
   // NOTE :- Post Verify Pass OTP
-  Future<int?> postVerifyOtp({
+  Future<Map<String, dynamic>?> postVerifyOtp({
     required String email,
     required String otp,
   }) async {
-    Response res = await post(
+    Response<Map<String, dynamic>?> res = await post<Map<String, dynamic>?>(
       'verify-otp',
       {'email': email, 'otp': otp},
       headers: {'Accept': 'application/json'},
@@ -98,7 +101,10 @@ class AuthProvider extends ApiProvider {
       return null;
     } else {
       Get.log(res.statusCode.toString());
-      return res.statusCode!;
+      return {
+        'code': res.statusCode!,
+        'data': res.body as Map<String, dynamic>,
+      };
     }
   }
 

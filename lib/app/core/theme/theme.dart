@@ -92,7 +92,7 @@ class Ui {
           borderRadius: BorderRadius.circular(15),
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 2),
+          padding: const EdgeInsets.symmetric(vertical: 5),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             mainAxisSize: MainAxisSize.min,
@@ -108,8 +108,7 @@ class Ui {
                 ),
               ),
               const SizedBox(width: 5),
-              // Lottie.asset('assets/lotties/loader.json', width: 80),
-              const CircularProgressIndicator()
+              Lottie.asset('assets/lotties/loader.json', width: 95),
             ],
           ),
         ),

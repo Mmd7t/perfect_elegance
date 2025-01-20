@@ -23,6 +23,9 @@ class AppServices extends GetxService {
   RxBool notificationsOn = RxBool(true);
   RxBool isSignup = RxBool(false);
 
+  RxInt packageId = 0.obs;
+  RxInt customerId = 0.obs;
+
   RxString accessToken = RxString('');
   RxString userName = RxString('');
   RxString userEmail = RxString('');

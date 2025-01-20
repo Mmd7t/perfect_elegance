@@ -25,10 +25,17 @@ class SplashView extends GetView<WelcomeController> {
         ),
       ),
       body: Center(
-        child: SizedBox(
-          width: Get.width * 0.5,
-          height: Get.width * 0.5,
-          child: "logo.png".assetImage,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+              width: Get.width * 0.5,
+              height: Get.width * 0.5,
+              child: "logo.png".assetImage,
+            ),
+            const SizedBox(height: 15),
+            const CircularProgressIndicator(color: Colors.white),
+          ],
         ),
       ),
     );

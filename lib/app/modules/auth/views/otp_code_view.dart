@@ -9,7 +9,6 @@ import 'package:perfect_elegance/app/data/constants/constants.dart';
 import 'package:perfect_elegance/app/data/extensions/extensions.dart';
 import 'package:perfect_elegance/app/modules/auth/controllers/otp_controller.dart';
 import 'package:perfect_elegance/app/modules/auth/widgets/pin_field.dart';
-import 'package:perfect_elegance/app/routes/app_pages.dart';
 
 class OtpCodeView extends StatefulWidget {
   const OtpCodeView({super.key});
@@ -89,7 +88,12 @@ class _OtpCodeViewState extends State<OtpCodeView> {
                           const SizedBox(width: 3),
                           InkWell(
                             borderRadius: BorderRadius.circular(10),
-                            onTap: () {},
+                            onTap: () {
+                              controller.forgetPassword(retry: true).then((v) {
+                                setState(() => _start = 60);
+                                _startTimer();
+                              });
+                            },
                             child: Padding(
                               padding: const EdgeInsets.all(5.0),
                               child: 'أعد الإرسال'.bodyMedium(
@@ -113,14 +117,9 @@ class _OtpCodeViewState extends State<OtpCodeView> {
                 children: [
                   GlobalButton(
                     onTap: () {
-                      // if (controller.otpFormKey.currentState!.validate()) {
-                      //   controller.otpFormKey.currentState!.save();
-                      //   controller.verifyOtp();
-                      // }
-                      if (controller.appServices.isSignup.value) {
-                        Get.offNamedUntil(Routes.login, (route) => false);
-                      } else {
-                        Get.toNamed(Routes.resetPass);
+                      if (controller.otpFormKey.currentState!.validate()) {
+                        controller.otpFormKey.currentState!.save();
+                        controller.verifyOtp();
                       }
                     },
                     text: 'تأكيد',

@@ -1,4 +1,4 @@
-class Datum {
+class TransactionDatum {
   int? id;
   String? documentNumber;
   int? userId;
@@ -13,7 +13,7 @@ class Datum {
   DateTime? createdAt;
   DateTime? updatedAt;
 
-  Datum({
+  TransactionDatum({
     this.id,
     this.documentNumber,
     this.userId,
@@ -29,7 +29,8 @@ class Datum {
     this.updatedAt,
   });
 
-  factory Datum.fromJson(Map<String, dynamic> json) => Datum(
+  factory TransactionDatum.fromJson(Map<String, dynamic> json) =>
+      TransactionDatum(
         id: json['id'] as int?,
         documentNumber: json['document_number'] as String?,
         userId: json['user_id'] as int?,

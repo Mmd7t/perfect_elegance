@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:perfect_elegance/app/core/widgets/search_card.dart';
-import 'package:perfect_elegance/app/data/constants/constants.dart';
 import 'package:perfect_elegance/app/data/extensions/extensions.dart';
+import 'package:perfect_elegance/app/data/models/all_orders_model/datum.dart';
+import 'package:perfect_elegance/app/modules/requests/widgets/order_card.dart';
+import 'package:perfect_elegance/app/modules/requests/widgets/order_card_shimmer.dart';
 import 'package:perfect_elegance/app/routes/app_pages.dart';
 import '../controllers/requests_controller.dart';
 
@@ -10,102 +12,117 @@ class RequestsView extends GetView<RequestsController> {
   const RequestsView({super.key});
   @override
   Widget build(BuildContext context) {
+    controller.scrollController.addListener(() {
+      if (controller.scrollController.position.pixels >=
+              controller.scrollController.position.maxScrollExtent - 200 &&
+          controller.ordersHasMore &&
+          !controller.isLoadingMoreOrders.value) {
+        controller.fetchNextOrders();
+      }
+    });
     return Scaffold(
-      appBar: AppBar(
-        title: 'الطلبات'.title(),
-        centerTitle: true,
-        elevation: 0.0,
-      ),
-      body: NestedScrollView(
-        headerSliverBuilder: (context, innerBoxIsScrolled) => [
-          SliverToBoxAdapter(
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              decoration: const BoxDecoration(
-                color: Colors.white,
-              ),
-              child: Row(
-                children: [
-                  const Expanded(
-                    child: SearchCard(
-                      text: "بحث..",
-                      icon: "search",
+      appBar:
+          AppBar(title: 'الطلبات'.title(), centerTitle: true, elevation: 0.0),
+      body: RefreshIndicator(
+        onRefresh: () async {
+          controller.orders.value = <OrderDatum>[];
+          controller.ordersCurrentPage.value = 1;
+          controller.ordersLastPage.value = 1;
+          controller.getOrders();
+        },
+        backgroundColor: Get.theme.primaryColor,
+        color: Colors.white,
+        displacement: 0.0,
+        child: NestedScrollView(
+          physics: const NeverScrollableScrollPhysics(),
+          headerSliverBuilder: (context, innerBoxIsScrolled) => [
+            SliverToBoxAdapter(
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: SearchCard(
+                        text: "بحث..",
+                        icon: "search",
+                        controller: controller.orderSearchController,
+                        onSuffixTap: () {
+                          controller.orders.value = <OrderDatum>[];
+                          controller.ordersCurrentPage.value = 1;
+                          controller.ordersLastPage.value = 1;
+                          controller.getOrders();
+                        },
+                      ),
                     ),
-                  ),
-                  const SizedBox(width: 12),
-                  IconButton(
-                    style: IconButton.styleFrom(
-                      backgroundColor: Get.theme.primaryColor,
-                    ),
-                    onPressed: () {},
-                    icon: "candle".iconColored(size: 20),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
-        body: GridView.builder(
-          physics: const BouncingScrollPhysics(),
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            mainAxisSpacing: 10,
-            crossAxisSpacing: 10,
-            childAspectRatio: 16 / 15,
-          ),
-          itemBuilder: (context, index) => Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  "#1001".titleSmall(),
-                  Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 15, vertical: 4),
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFE4CB87).withValues(alpha: 0.16),
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    child: "قائمة".caption(color: Constants.pending),
+          ],
+          body: RefreshIndicator(
+            onRefresh: () async {
+              controller.orders.value = <OrderDatum>[];
+              controller.ordersCurrentPage.value = 1;
+              controller.ordersLastPage.value = 1;
+              controller.getOrders();
+            },
+            backgroundColor: Get.theme.primaryColor,
+            color: Colors.white,
+            displacement: 0.0,
+            child: Obx(() {
+              final isLoading = controller.isOrdersLoading.value;
+              final orders = controller.orders;
+              final hasMore = controller.ordersHasMore;
+              if (isLoading && orders.isEmpty) {
+                return GridView.builder(
+                  primary: false,
+                  controller: controller.scrollController,
+                  physics: const BouncingScrollPhysics(),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 10,
+                    crossAxisSpacing: 10,
+                    childAspectRatio: 16 / 15,
                   ),
-                ],
-              ),
-              const Spacer(),
-              Row(
-                children: [
-                  "user".iconColored(size: 16),
-                  const SizedBox(width: 8),
-                  "هند أسامة".bodyMedium(),
-                ],
-              ),
-              const SizedBox(height: 6),
-              Row(
-                children: [
-                  "phone".iconColored(size: 16),
-                  const SizedBox(width: 8),
-                  "+20 1022 2322 22".bodyMedium(),
-                ],
-              ),
-              const SizedBox(height: 6),
-              Row(
-                children: [
-                  "location".iconColored(size: 16),
-                  const SizedBox(width: 8),
-                  "طرابلس".bodyMedium(),
-                ],
-              ),
-              const SizedBox(height: 6),
-              Row(
-                children: [
-                  "package".iconColored(size: 16),
-                  const SizedBox(width: 8),
-                  "4".bodyMedium(),
-                ],
-              ),
-            ],
-          ).decorate(padding: 12),
-          itemCount: 10,
+                  itemBuilder: (context, index) {
+                    return const OrderCardShimmer();
+                  },
+                  itemCount: 10,
+                );
+              } else if (orders.isEmpty) {
+                return Center(
+                  child: 'لا يوجد طلبات'.bodyMedium(),
+                );
+              } else {
+                return GridView.builder(
+                  primary: false,
+                  controller: controller.scrollController,
+                  physics: const BouncingScrollPhysics(),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 10,
+                    crossAxisSpacing: 10,
+                    childAspectRatio: 16 / 15,
+                  ),
+                  itemBuilder: (context, index) {
+                    if (index < orders.length) {
+                      return OrderCard(order: orders[index]);
+                    } else {
+                      return const OrderCardShimmer();
+                    }
+                  },
+                  itemCount: orders.length + (hasMore ? 1 : 0),
+                );
+              }
+            }),
+          ),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,

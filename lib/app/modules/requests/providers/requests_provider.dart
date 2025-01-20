@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:perfect_elegance/app/data/providers/api_provider.dart';
+import 'package:perfect_elegance/app/data/services/app_services.dart';
 
 class RequestsProvider extends ApiProvider {
   // NOTE :- Post Store Without Deposit
@@ -29,7 +30,8 @@ class RequestsProvider extends ApiProvider {
       'delivery_on': deliveryOn,
       'id': id
     }, headers: {
-      'Accept': 'application/json'
+      'Accept': 'application/json',
+      'Authorization': 'Bearer ${Get.find<AppServices>().accessToken.value}',
     });
     if (res.status.isServerError || res.status.connectionError) {
       return null;
@@ -69,7 +71,8 @@ class RequestsProvider extends ApiProvider {
       'delivery_on': deliveryOn,
       'id': id
     }, headers: {
-      'Accept': 'application/json'
+      'Accept': 'application/json',
+      'Authorization': 'Bearer ${Get.find<AppServices>().accessToken.value}',
     });
     if (res.status.isServerError || res.status.connectionError) {
       return null;
@@ -89,7 +92,8 @@ class RequestsProvider extends ApiProvider {
         await post<Map<String, dynamic>?>('orders/addProduct', {
       'order_id': orderId,
     }, headers: {
-      'Accept': 'application/json'
+      'Accept': 'application/json',
+      'Authorization': 'Bearer ${Get.find<AppServices>().accessToken.value}',
     });
     if (res.status.isServerError || res.status.connectionError) {
       return null;
@@ -105,8 +109,12 @@ class RequestsProvider extends ApiProvider {
   // NOTE :- GET Show Order
   Future<Map<String, dynamic>?> getShowOrder(int id) async {
     Response<Map<String, dynamic>?> res = await get<Map<String, dynamic>?>(
-        'orders/$id/get-data',
-        headers: {'Accept': 'application/json'});
+      'orders/$id/get-data',
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': 'Bearer ${Get.find<AppServices>().accessToken.value}',
+      },
+    );
     if (res.status.isServerError || res.status.connectionError) {
       return null;
     } else {
@@ -119,10 +127,20 @@ class RequestsProvider extends ApiProvider {
   }
 
   // NOTE :- GET All Orders
-  Future<Map<String, dynamic>?> getAllOrders() async {
+  Future<Map<String, dynamic>?> getAllOrders({
+    int page = 1,
+    String orderId = "",
+    String fromDate = "",
+    String toDate = "",
+    String status = "",
+  }) async {
     Response<Map<String, dynamic>?> res = await get<Map<String, dynamic>?>(
-        'orders',
-        headers: {'Accept': 'application/json'});
+        'orders?page=$page&order_id=$orderId&fromdate=$fromDate&todate=$toDate&status=$status',
+        headers: {
+          'Accept': 'application/json',
+          'Authorization':
+              'Bearer ${Get.find<AppServices>().accessToken.value}',
+        });
     if (res.status.isServerError || res.status.connectionError) {
       return null;
     } else {

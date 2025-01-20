@@ -24,7 +24,10 @@ class ProfileView extends GetView<ProfileController> {
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(
           children: [
-            const ProfileHeader(),
+            ProfileHeader(
+              name: controller.appServices.userName.value,
+              email: controller.appServices.userEmail.value,
+            ),
             const SizedBox(height: 20),
             SizedBox(
               width: Get.width,

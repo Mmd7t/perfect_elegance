@@ -192,7 +192,10 @@ class MenuView extends GetView<MainController> {
                               children: [
                                 Expanded(
                                   child: TextButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      Get.back();
+                                      controller.logout();
+                                    },
                                     child: "تسجيل خروج"
                                         .button(color: Constants.cancel),
                                   ),

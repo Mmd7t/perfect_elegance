@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:perfect_elegance/app/core/theme/theme.dart';
 import 'package:perfect_elegance/app/data/models/home_model.dart';
 import 'package:perfect_elegance/app/modules/main/views/home_view.dart';
 import 'package:perfect_elegance/app/modules/profile/views/profile_view.dart';
 import 'package:perfect_elegance/app/modules/requests/views/requests_view.dart';
 import 'package:perfect_elegance/app/modules/settlements/views/settlements_view.dart';
 import 'package:perfect_elegance/app/modules/shipments/views/shipments_view.dart';
-
-import '../../../core/theme/theme.dart';
+import 'package:perfect_elegance/app/routes/app_pages.dart';
 import '../providers/home_provider.dart';
 
 class MainController extends GetxController with GetTickerProviderStateMixin {
@@ -83,6 +83,13 @@ class MainController extends GetxController with GetTickerProviderStateMixin {
         homeModel.value = HomeModel.fromJson(res['data']);
       } else {}
     } else {}
+  }
+
+  logout() async {
+    Ui.loadingDialog();
+    await provider.getLogout();
+    Get.back();
+    Get.offAllNamed(Routes.login);
   }
 
   @override

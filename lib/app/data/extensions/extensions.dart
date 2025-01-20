@@ -81,6 +81,11 @@ extension CustomInputDecoration on InputDecoration {
         color: Constants.grey4,
         fontFamily: 'Cairo',
       ),
+      errorStyle: const TextStyle(
+        fontSize: 12,
+        color: Constants.cancel,
+        fontFamily: 'Cairo',
+      ),
       filled: true,
       fillColor: fillColor,
       prefixIcon: prefixIcon != null

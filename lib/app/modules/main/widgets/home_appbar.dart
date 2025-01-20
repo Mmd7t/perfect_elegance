@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:perfect_elegance/app/data/constants/constants.dart';
 import 'package:perfect_elegance/app/data/extensions/extensions.dart';
+import 'package:perfect_elegance/app/data/services/app_services.dart';
 import 'package:perfect_elegance/app/modules/main/controllers/main_controller.dart';
 import 'package:perfect_elegance/app/routes/app_pages.dart';
 
@@ -10,6 +11,7 @@ class HomeAppbar extends StatelessWidget implements PreferredSizeWidget {
   HomeAppbar({super.key});
 
   final MainController menuController = Get.find<MainController>();
+  final AppServices appServices = Get.find<AppServices>();
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +53,7 @@ class HomeAppbar extends StatelessWidget implements PreferredSizeWidget {
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          'مرحبا Salma'.titleSmall(
+          'مرحبا ${appServices.userName.split(' ').first}'.titleSmall(
             color: Constants.black2,
             weight: FontWeight.bold,
           ),

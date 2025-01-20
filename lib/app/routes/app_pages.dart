@@ -1,12 +1,6 @@
 import 'package:get/get.dart';
-import 'package:perfect_elegance/app/modules/customers/views/customer_details_view.dart';
-import 'package:perfect_elegance/app/modules/main/views/returns_view.dart';
-import 'package:perfect_elegance/app/modules/profile/views/account_statement_view.dart';
-import 'package:perfect_elegance/app/modules/profile/views/account_verified_view.dart';
-import 'package:perfect_elegance/app/modules/profile/views/policy_view.dart';
-import 'package:perfect_elegance/app/modules/profile/views/terms_view.dart';
-import 'package:perfect_elegance/app/modules/tickets/views/add_ticket_view.dart';
-import 'package:perfect_elegance/app/modules/tickets/views/ticket_details_view.dart';
+import 'package:perfect_elegance/app/modules/customers/bindings/customer_details_binding.dart';
+import 'package:perfect_elegance/app/modules/shipments/bindings/shipments_details_binding.dart';
 
 import '../../no_internet_view.dart';
 import '../modules/auth/bindings/auth_binding.dart';
@@ -16,6 +10,7 @@ import '../modules/auth/views/otp_code_view.dart';
 import '../modules/auth/views/reset_password.dart';
 import '../modules/auth/views/signup_view.dart';
 import '../modules/customers/bindings/customers_binding.dart';
+import '../modules/customers/views/customer_details_view.dart';
 import '../modules/customers/views/customers_view.dart';
 import '../modules/main/bindings/main_binding.dart';
 import '../modules/main/views/main_view.dart';
@@ -23,19 +18,30 @@ import '../modules/notifications/bindings/notifications_binding.dart';
 import '../modules/notifications/views/notifications_view.dart';
 import '../modules/onboarding/bindings/onboarding_binding.dart';
 import '../modules/onboarding/views/onboarding_view.dart';
+import '../modules/profile/bindings/account_statement_binding.dart';
+import '../modules/profile/bindings/policy_binding.dart';
 import '../modules/profile/bindings/profile_binding.dart';
+import '../modules/profile/bindings/terms_binding.dart';
+import '../modules/profile/views/account_statement_view.dart';
+import '../modules/profile/views/account_verified_view.dart';
+import '../modules/profile/views/policy_view.dart';
 import '../modules/profile/views/profile_view.dart';
+import '../modules/profile/views/terms_view.dart';
 import '../modules/requests/bindings/requests_binding.dart';
 import '../modules/requests/views/add_customer_view.dart';
 import '../modules/requests/views/add_new_product_view.dart';
 import '../modules/requests/views/add_request_view.dart';
 import '../modules/requests/views/requests_view.dart';
+import '../modules/returns/bindings/returns_binding.dart';
+import '../modules/returns/views/returns_view.dart';
 import '../modules/settlements/bindings/settlements_binding.dart';
 import '../modules/settlements/views/settlements_view.dart';
 import '../modules/shipments/bindings/shipments_binding.dart';
 import '../modules/shipments/views/shipment_details_view.dart';
 import '../modules/shipments/views/shipments_view.dart';
 import '../modules/tickets/bindings/tickets_binding.dart';
+import '../modules/tickets/views/add_ticket_view.dart';
+import '../modules/tickets/views/ticket_details_view.dart';
 import '../modules/tickets/views/tickets_view.dart';
 import '../modules/welcome/bindings/welcome_binding.dart';
 import '../modules/welcome/views/splash_view.dart';
@@ -55,12 +61,13 @@ class AppPages {
     GetPage(
       name: Routes.main,
       page: () => const MainView(),
-      binding: MainBinding(),
-    ),
-    GetPage(
-      name: Routes.returns,
-      page: () => const ReturnsView(),
-      binding: MainBinding(),
+      bindings: [
+        MainBinding(),
+        RequestsBinding(),
+        ShipmentsBinding(),
+        SettlementsBinding(),
+        ProfileBinding(),
+      ],
     ),
     GetPage(
       name: Routes.profile,
@@ -75,17 +82,17 @@ class AppPages {
     GetPage(
       name: Routes.policy,
       page: () => const PolicyView(),
-      binding: ProfileBinding(),
+      binding: PolicyBinding(),
     ),
     GetPage(
       name: Routes.terms,
       page: () => const TermsView(),
-      binding: ProfileBinding(),
+      binding: TermsBinding(),
     ),
     GetPage(
       name: Routes.accountStatement,
       page: () => const AccountStatementView(),
-      binding: ProfileBinding(),
+      binding: AccountStatementBinding(),
     ),
     GetPage(
       name: Routes.login,
@@ -120,7 +127,7 @@ class AppPages {
     GetPage(
       name: Routes.shipmentDetails,
       page: () => const ShipmentDetailsView(),
-      binding: ShipmentsBinding(),
+      binding: ShipmentDetailsBinding(),
     ),
     GetPage(
       name: Routes.settlements,
@@ -185,7 +192,12 @@ class AppPages {
     GetPage(
       name: Routes.customerDetails,
       page: () => const CustomerDetailsView(),
-      binding: CustomersBinding(),
+      binding: CustomerDetailsBinding(),
+    ),
+    GetPage(
+      name: Routes.returns,
+      page: () => const ReturnsView(),
+      binding: ReturnsBinding(),
     ),
   ];
 }

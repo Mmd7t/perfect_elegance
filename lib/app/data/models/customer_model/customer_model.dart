@@ -4,6 +4,7 @@ class CustomerModel {
   dynamic email;
   String? phone;
   String? address;
+  String? ordersCount;
 
   CustomerModel({
     this.id,
@@ -11,6 +12,7 @@ class CustomerModel {
     this.email,
     this.phone,
     this.address,
+    this.ordersCount,
   });
 
   factory CustomerModel.fromJson(Map<String, dynamic> json) {
@@ -20,14 +22,7 @@ class CustomerModel {
       email: json['email'] as dynamic,
       phone: json['phone'] as String?,
       address: json['address'] as String?,
+      ordersCount: json['order_count'].toString(),
     );
   }
-
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'name': name,
-        'email': email,
-        'phone': phone,
-        'address': address,
-      };
 }

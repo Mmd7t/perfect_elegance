@@ -1,7 +1,8 @@
 import 'customer.dart';
 import 'product_order.dart';
+import 'vanex_package.dart';
 
-class Datum {
+class PackageDatum {
   int? id;
   String? vanexPackageCode;
   String? vanexDelegateType;
@@ -15,8 +16,9 @@ class Datum {
   String? shippingOn;
   Customer? customer;
   List<ProductOrder>? productOrders;
+  VanexPackage? vanexPackage;
 
-  Datum({
+  PackageDatum({
     this.id,
     this.vanexPackageCode,
     this.vanexDelegateType,
@@ -30,9 +32,10 @@ class Datum {
     this.shippingOn,
     this.customer,
     this.productOrders,
+    this.vanexPackage,
   });
 
-  factory Datum.fromJson(Map<String, dynamic> json) => Datum(
+  factory PackageDatum.fromJson(Map<String, dynamic> json) => PackageDatum(
         id: json['id'] as int?,
         vanexPackageCode: json['vanex_package_code'] as String?,
         vanexDelegateType: json['vanex_delegate_type'] as String?,
@@ -50,6 +53,10 @@ class Datum {
         productOrders: (json['product_orders'] as List<dynamic>?)
             ?.map((e) => ProductOrder.fromJson(e as Map<String, dynamic>))
             .toList(),
+        vanexPackage: json['vanex_package'] == null
+            ? null
+            : VanexPackage.fromJson(
+                json['vanex_package'] as Map<String, dynamic>),
       );
 
   Map<String, dynamic> toJson() => {
@@ -66,5 +73,6 @@ class Datum {
         'shipping_on': shippingOn,
         'customer': customer?.toJson(),
         'product_orders': productOrders?.map((e) => e.toJson()).toList(),
+        'vanex_package': vanexPackage?.toJson(),
       };
 }

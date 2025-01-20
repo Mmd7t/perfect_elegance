@@ -21,4 +21,18 @@ class HomeProvider extends ApiProvider {
       };
     }
   }
+
+  // NOTE :- GET Logout
+  Future<int?> getLogout() async {
+    Response<Map<String, dynamic>?> res = await post('logout', {}, headers: {
+      'Accept': 'application/json',
+      'Authorization': 'Bearer ${Get.find<AppServices>().accessToken.value}',
+    });
+    if (res.status.isServerError || res.status.connectionError) {
+      return null;
+    } else {
+      Get.log(res.statusCode.toString());
+      return res.statusCode!;
+    }
+  }
 }

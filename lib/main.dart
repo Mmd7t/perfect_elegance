@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Perfect Elegance',
+      title: 'PE Seller',
       theme: light,
       localizationsDelegates: const [
         GlobalCupertinoLocalizations.delegate,
