@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:perfect_elegance/app/modules/customers/bindings/customer_details_binding.dart';
 import 'package:perfect_elegance/app/modules/shipments/bindings/shipments_details_binding.dart';
+import 'package:perfect_elegance/app/modules/tickets/bindings/ticket_details_binding.dart';
 
 import '../../no_internet_view.dart';
 import '../modules/auth/bindings/auth_binding.dart';
@@ -182,7 +183,7 @@ class AppPages {
     GetPage(
       name: Routes.ticketDetails,
       page: () => const TicketDetailsView(),
-      binding: TicketsBinding(),
+      binding: TicketDetailsBinding(),
     ),
     GetPage(
       name: Routes.customers,

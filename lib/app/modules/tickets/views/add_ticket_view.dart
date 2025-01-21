@@ -92,19 +92,64 @@ class AddTicketView extends GetView<TicketsController> {
                   ),
                 ],
               ),
-              GlobalTextField(
-                hintText: "اختر",
-                title: "الادارة",
-                inputType: TextInputType.text,
-                textInputAction: TextInputAction.next,
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return "يجب ادخال عنوان التذكرة";
-                  } else {
-                    return null;
-                  }
-                },
-                onSaved: (val) => controller.title.value = val!,
+              const SizedBox(height: 8),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  'الادارة'.tr.subtitle(),
+                  const SizedBox(height: 8),
+                  Obx(
+                    () {
+                      return Container(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 5, horizontal: 5),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(color: Constants.grey3, width: 1),
+                        ),
+                        child: DropdownButtonHideUnderline(
+                          child: DropdownButton<TicketManagement>(
+                            padding: const EdgeInsetsDirectional.symmetric(
+                                    horizontal: 15)
+                                .copyWith(end: 25),
+                            isExpanded: true,
+                            value: controller.management.value,
+                            borderRadius: BorderRadius.circular(15),
+                            elevation: 2,
+                            hint: 'أختر'.bodyMedium(),
+                            alignment: AlignmentDirectional.centerStart,
+                            onTap: () {
+                              FocusScope.of(context).unfocus();
+                            },
+                            items: [
+                              DropdownMenuItem(
+                                alignment: AlignmentDirectional.centerStart,
+                                value: TicketManagement.storeMonitoring,
+                                child: 'مراقبة المتجر'
+                                    .bodyMedium(color: Colors.black),
+                              ),
+                              DropdownMenuItem(
+                                alignment: AlignmentDirectional.centerStart,
+                                value: TicketManagement.financialManagement,
+                                child: 'الادارة المالية'
+                                    .bodyMedium(color: Colors.black),
+                              ),
+                              DropdownMenuItem(
+                                alignment: AlignmentDirectional.centerStart,
+                                value: TicketManagement.operations,
+                                child:
+                                    'العمليات'.bodyMedium(color: Colors.black),
+                              ),
+                            ],
+                            onChanged: (value) {
+                              controller.management.value = value!;
+                            },
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ],
               ),
               const SizedBox(height: 8),
               GlobalTextField(
@@ -112,7 +157,7 @@ class AddTicketView extends GetView<TicketsController> {
                 title: "كود الشحن",
                 inputType: TextInputType.text,
                 textInputAction: TextInputAction.next,
-                onSaved: (val) => controller.title.value = val!,
+                onSaved: (val) => controller.packageCode.value = val!,
               ),
               const SizedBox(height: 8),
               GlobalTextField(
@@ -128,7 +173,7 @@ class AddTicketView extends GetView<TicketsController> {
                     return null;
                   }
                 },
-                onSaved: (val) => controller.title.value = val!,
+                onSaved: (val) => controller.body.value = val!,
               ),
               const SizedBox(height: 40),
               GlobalButton(

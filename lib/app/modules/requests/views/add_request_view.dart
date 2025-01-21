@@ -318,7 +318,8 @@ class AddRequestView extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+        padding:
+            const EdgeInsets.symmetric(horizontal: 16).copyWith(bottom: 25),
         child: GlobalButton(
           onTap: () {},
           text: "التالي",

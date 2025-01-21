@@ -69,23 +69,26 @@ class ProfileView extends GetView<ProfileController> {
               route: Routes.terms,
             ),
             const SizedBox(height: 8),
-            SwitchListTile(
-              contentPadding:
-                  const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
-              value: false,
-              onChanged: (value) {
-                // controller.isNotificationsChecked.value = value;
-              },
-              trackOutlineColor:
-                  const WidgetStatePropertyAll(Colors.transparent),
-              inactiveTrackColor: Constants.grey4.withValues(alpha: 0.5),
-              tileColor: Constants.grey5.withValues(alpha: 0.4),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16),
-              ),
-              title: "الاشعارات".body(color: Get.theme.colorScheme.secondary),
-              secondary: "noti".iconColored(),
-            ),
+            Obx(() {
+              return SwitchListTile(
+                contentPadding:
+                    const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
+                value: controller.isNotificationsChecked.value,
+                onChanged: (value) {
+                  controller.isNotificationsChecked.value = value;
+                  controller.appServices.notificationsOn.value = value;
+                },
+                trackOutlineColor:
+                    const WidgetStatePropertyAll(Colors.transparent),
+                inactiveTrackColor: Constants.grey4.withValues(alpha: 0.5),
+                tileColor: Constants.grey5.withValues(alpha: 0.4),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                title: "الاشعارات".body(color: Get.theme.colorScheme.secondary),
+                secondary: "noti".iconColored(),
+              );
+            }),
             const SizedBox(height: 8),
             const ProfileCard(
               title: "سياسة الخصوصية",

@@ -25,6 +25,7 @@ class AppServices extends GetxService {
 
   RxInt packageId = 0.obs;
   RxInt customerId = 0.obs;
+  RxInt ticketId = 0.obs;
 
   RxString accessToken = RxString('');
   RxString userName = RxString('');

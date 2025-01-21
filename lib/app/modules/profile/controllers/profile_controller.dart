@@ -5,4 +5,5 @@ import 'package:perfect_elegance/app/modules/profile/providers/profile_provider.
 class ProfileController extends GetxController {
   final AppServices appServices = Get.find<AppServices>();
   final ProfileProvider provider = Get.find<ProfileProvider>();
+  RxBool isNotificationsChecked = true.obs;
 }
