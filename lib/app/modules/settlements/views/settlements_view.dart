@@ -11,8 +11,18 @@ class SettlementsView extends GetView<SettlementsController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:
-          AppBar(title: 'التسوية'.title(), centerTitle: true, elevation: 0.0),
+      appBar: AppBar(
+        title: 'التسوية'.title(),
+        centerTitle: true,
+        elevation: 0.0,
+        leading: IconButton(
+          onPressed: () {
+            controller.appServices.pageController.jumpToPage(0);
+            controller.appServices.currentIndex.value = 0;
+          },
+          icon: const Icon(Icons.arrow_back_ios_new_rounded, size: 22),
+        ),
+      ),
       body: RefreshIndicator(
         onRefresh: () async {
           controller.getSettlements();

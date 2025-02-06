@@ -18,6 +18,13 @@ class ProfileView extends GetView<ProfileController> {
         title: 'المزيد'.title(),
         centerTitle: true,
         elevation: 0.0,
+        leading: IconButton(
+          onPressed: () {
+            controller.appServices.pageController.jumpToPage(0);
+            controller.appServices.currentIndex.value = 0;
+          },
+          icon: const Icon(Icons.arrow_back_ios_new_rounded, size: 22),
+        ),
       ),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
@@ -94,6 +101,42 @@ class ProfileView extends GetView<ProfileController> {
               title: "سياسة الخصوصية",
               icon: "shield",
               route: Routes.policy,
+            ),
+            const SizedBox(height: 8),
+            ProfileCard(
+              title: "حذف الحساب",
+              icon: "delete user",
+              isLogout: true,
+              route: '',
+              onTap: () {
+                Get.defaultDialog(
+                  title: "حذف الحساب",
+                  titleStyle: Get.textTheme.titleMedium!.copyWith(
+                    color: Constants.primary,
+                    fontFamily: "Cairo",
+                  ),
+                  cancel: TextButton(
+                    onPressed: () {
+                      Get.back();
+                    },
+                    style: TextButton.styleFrom(
+                      backgroundColor: Constants.grey4.withValues(alpha: 0.2),
+                    ),
+                    child: "الغاء".button(color: Constants.cancel),
+                  ),
+                  confirm: TextButton(
+                    onPressed: () {
+                      Get.back();
+                      controller.unsubscribe();
+                    },
+                    style: TextButton.styleFrom(
+                      backgroundColor: Constants.primary,
+                    ),
+                    child: "حذف".button(color: Colors.white),
+                  ),
+                  content: "هل تريد بالفعل حذف حسابك؟".bodyMedium(),
+                );
+              },
             ),
             const SizedBox(height: 8),
           ],

@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:perfect_elegance/app/core/enums/enums.dart';
 import 'package:perfect_elegance/app/data/models/all_orders_model/all_orders_model.dart';
 import 'package:perfect_elegance/app/data/models/all_orders_model/datum.dart';
+import 'package:perfect_elegance/app/data/services/app_services.dart';
 import 'package:perfect_elegance/app/modules/requests/providers/requests_provider.dart';
 
 class RequestsController extends GetxController {
   final RequestsProvider provider = Get.find<RequestsProvider>();
+  final AppServices appServices = Get.find<AppServices>();
+
   final ScrollController scrollController = ScrollController();
 
   final TextEditingController orderSearchController = TextEditingController();
-  RxString orderStatusSearch = "".obs;
+  Rx<OrderStatusSearch> orderStatusSearch = OrderStatusSearch.init.obs;
   RxString orderFromDateSearch = "".obs;
   RxString orderToDateSearch = "".obs;
 
@@ -21,7 +25,7 @@ class RequestsController extends GetxController {
     isOrdersLoading.value = true;
     final Map<String, dynamic>? data = await provider.getAllOrders(
       page: ordersCurrentPage.value,
-      status: orderStatusSearch.value,
+      status: orderStatusSearch.value.toString(),
       orderId: orderSearchController.text,
       fromDate: orderFromDateSearch.value,
       toDate: orderToDateSearch.value,

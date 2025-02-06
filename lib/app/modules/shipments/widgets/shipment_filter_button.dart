@@ -5,8 +5,8 @@ import 'package:perfect_elegance/app/data/extensions/extensions.dart';
 import 'package:perfect_elegance/app/data/models/packages_model/datum.dart';
 import 'package:perfect_elegance/app/modules/shipments/controllers/shipments_controller.dart';
 
-class FilterButton extends GetWidget<ShipmentsController> {
-  const FilterButton({super.key});
+class ShipmentFilterButton extends GetWidget<ShipmentsController> {
+  const ShipmentFilterButton({super.key});
 
   @override
   Widget build(BuildContext context) {

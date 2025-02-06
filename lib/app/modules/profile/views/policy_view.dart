@@ -1,55 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
-
 import 'package:get/get.dart';
 import 'package:perfect_elegance/app/core/widgets/global_appbar.dart';
 import 'package:perfect_elegance/app/data/extensions/extensions.dart';
-import 'package:perfect_elegance/app/modules/profile/controllers/policy_controller.dart';
 
-class PolicyView extends GetView<PolicyController> {
+class PolicyView extends GetView {
   const PolicyView({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const GlobalAppbar(title: "سياسة الخصوصية"),
-      body: Obx(() {
-        if (controller.isLoading.value) {
-          return const Center(child: CircularProgressIndicator());
-        } else {
-          if (controller.data.isEmpty) {
-            return Center(child: "لا يوجد سياسات".bodyMedium());
-          } else {
-            return ListView.separated(
-              physics: const BouncingScrollPhysics(),
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              itemBuilder: (context, index) => Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  "${controller.data[index].title}".titleSmall(),
-                  const SizedBox(height: 2),
-                  HtmlWidget(
-                    controller.data[index].content!,
-                    customStylesBuilder: (element) {
-                      if (element.classes.contains('foo')) {
-                        return {'color': 'red'};
-                      }
-
-                      return null;
-                    },
-                    renderMode: RenderMode.column,
-                    textStyle: const TextStyle(
-                      fontSize: 14,
-                      fontFamily: 'Cairo',
-                    ),
-                  ),
-                ],
-              ),
-              separatorBuilder: (context, index) => const SizedBox(height: 8),
-              itemCount: controller.data.length,
-            );
-          }
-        }
-      }),
+      body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: SafeArea(
+          child:
+              '''سياسة الخصوصية:\nشروط استخدام الخدمة:\nأولاً: تعريفات وأحكام عامة.\n    • “مزود الخدمة” تعني شركة (الأناقة المثالية لاستيراد الملابس والمنسوجات).\n    • “المستفيد” تعني متاجر بيع الملابس. أو أي شخص يقدم طلبا للاستفادة من الخدمة.\n    • الخدمــــة: تقوم شركة الأناقة المثالية بتوفير خدمة (PE Business) والتي يتم من خلالها شراء وشحن وتوصيل طلبيات المستفيدين من المواقع العالمية حسب ما يتفق عليه الطرفان.\n    • “المنتجات والبضائع” تعني الطلبيات من ملابس ومنسوجات واكسسوارات التي يطلب المستفيد من المزود تزويده بها.\n    • “العقــــــد” تعني هذا العقد.\n    • في حالة حدوث نزاع فالقضاء الليبي هو المختص بحل النزاع\n    • نحتفظ بالحق في تعديل هذه الشروط في أي وقت.\n    • تسري التغييرات والتوضيحات فور نشرها على الموقع. إذا أجرينا تغييرات جوهرية، فسنخطرك هنا بأنه قد تم تحديثها.\n    • يمثّل استمرار استخدامك للخدمات بعد تاريخ السريان موافقتك على الشروط المعدلة.\n  ثانياً: التزامات مزود الخدمة:\n    • تتعهد شركة (الأناقة المثالية PE Group) بتزويد العملاء بالمنتجات التي تطلبها بكميات وأسعار وشروط التسليم التي يتفق عليها الطرفان.\n    • تتعهد شركة (الأناقة المثالية PE Group) بتزويد العملاء بالمنتجات المتفق عليها وفق الجودة المطلوبة وفي فترة زمنية لا تقل عن 20 يوم ولا تزيد عن 30 يوم\n    • تتعهد شركة (الأناقة المثالية PE Group) في حالة التأخير عن تسليم المنتجات لأكثر من 30 يوم بان تقوم بتخفيض في سعر المنتجات قدرة (10‎%‎) لصالح المستفيد\n    • تتعهد شركة (شركة الأناقة المثالية PE Group) في حال وصول البضاعة تالفه أو بها عيوب جسيمة بعدم إلزام المستفيد بدفع قيمتها.\n  ثالثاً: التزامات المستفيد:\n    • يتحمل المستفيد أي خطأ ناتج عن أي عملية ادخال خاطئ لبيانات الطلبية بمنصة (PE Business)\n    • يتعهد العميل بدفع المبلغ المتفق عليه بمجرد إعلامه بوصول البضاعة لمخازن شركة (الأناقة المثالية PE Group) في طرابلس\n    • يتعهد العميل باستلام بضاعته في فترة أقصاها 3 أيام منذ يوم إعلامه بوصول البضاعة، وفي حالة تأخره عن الاستلام يتحمل غرامة مالية تقدرها شركة (الأناقة المثالية PE Group)\n    • يتعهد العميل بفحص البضاعة عند استلامها التأكد من مطابقتها للشروط المتفق عليها.\n    • يتعهد العميل بإبلاغ شركة (الأناقة المثالية PE Group) عن أي عيوب في البضاعة خلال 24 ساعة الأولى لاستلامه للبضاعة.\n    • يتعهد العميل بعدم طلب بضاعة تخالف النظام العام والآداب في ليبيا.\n    • إن جميع العلامات التجارية والاسماء التجارية والشعارات المعروضة على هذا الموقع مملوكة لشركة (شركة الأناقة المثالية PE Group)، والشركات التي تتعامل معها، ولا يسمح لك باستخدامها بأي شكل من الأشكال.\n    • باستخدامك منصة (PE Business) المملوكة لشركة (الأناقة المثالية PE Group) فإنك توافق على هذه الشروط والأحكام، وعند اخلالك بأي شرط من الشروط والاحكام السابقة فإنك تتحمل المسؤولية القانونية الكاملة، ولشركة (الأناقة المثالية PE Group) الحق في اتخاذ ما تراه مناسب من اجراءات قانونية لضمان حقوقها./n    لقد قرأت وفهمت هذه الشروط؛ سوف تمتثل للشروط؛ وأنت على الأقل في سن الرشد القانوني في مكان إقامتك وغير ذلك من الشروط القانونية للدخول في العقود.'''
+                  .bodyMedium(),
+        ),
+      ),
     );
   }
 }

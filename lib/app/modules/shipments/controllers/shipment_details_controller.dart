@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:perfect_elegance/app/core/theme/theme.dart';
 import 'package:perfect_elegance/app/data/models/package_details_model/package_details_model.dart';
 import 'package:perfect_elegance/app/data/services/app_services.dart';
 import 'package:perfect_elegance/app/modules/shipments/providers/shipments_provider.dart';
@@ -21,6 +22,20 @@ class ShipmentDetailsController extends GetxController {
       }
     } else {
       isPackagesLoading.value = false;
+    }
+  }
+
+  Future<void> restorePackage(int id) async {
+    Ui.loadingDialog();
+    final int? data = await provider.postRestore(id);
+    if (data != null) {
+      Get.back();
+      if (data == 200) {
+        Get.back();
+        Ui.successGetBar(message: "تم استعادة الشحنة بنجاح");
+      }
+    } else {
+      Get.back();
     }
   }
 

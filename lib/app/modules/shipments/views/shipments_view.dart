@@ -8,7 +8,7 @@ import 'package:perfect_elegance/app/data/models/all_orders_model/user.dart';
 import 'package:perfect_elegance/app/data/models/packages_model/datum.dart';
 import 'package:perfect_elegance/app/modules/requests/widgets/order_card.dart';
 import 'package:perfect_elegance/app/modules/requests/widgets/order_card_shimmer.dart';
-import 'package:perfect_elegance/app/modules/shipments/widgets/filter_button.dart';
+import 'package:perfect_elegance/app/modules/shipments/widgets/shipment_filter_button.dart';
 import 'package:perfect_elegance/app/routes/app_pages.dart';
 
 import '../controllers/shipments_controller.dart';
@@ -30,6 +30,13 @@ class ShipmentsView extends GetView<ShipmentsController> {
         title: 'الشحنات'.title(),
         centerTitle: true,
         elevation: 0.0,
+        leading: IconButton(
+          onPressed: () {
+            controller.appServices.pageController.jumpToPage(0);
+            controller.appServices.currentIndex.value = 0;
+          },
+          icon: const Icon(Icons.arrow_back_ios_new_rounded, size: 22),
+        ),
       ),
       body: RefreshIndicator(
         onRefresh: () async {
@@ -66,7 +73,7 @@ class ShipmentsView extends GetView<ShipmentsController> {
                       ),
                     ),
                     const SizedBox(width: 12),
-                    const FilterButton(),
+                    const ShipmentFilterButton(),
                   ],
                 ),
               ),

@@ -5,6 +5,7 @@ import 'package:perfect_elegance/app/data/extensions/extensions.dart';
 import 'package:perfect_elegance/app/data/models/all_orders_model/datum.dart';
 import 'package:perfect_elegance/app/modules/requests/widgets/order_card.dart';
 import 'package:perfect_elegance/app/modules/requests/widgets/order_card_shimmer.dart';
+import 'package:perfect_elegance/app/modules/requests/widgets/requests_filter_button.dart';
 import 'package:perfect_elegance/app/routes/app_pages.dart';
 import '../controllers/requests_controller.dart';
 
@@ -21,8 +22,18 @@ class RequestsView extends GetView<RequestsController> {
       }
     });
     return Scaffold(
-      appBar:
-          AppBar(title: 'الطلبات'.title(), centerTitle: true, elevation: 0.0),
+      appBar: AppBar(
+        title: 'الطلبات'.title(),
+        centerTitle: true,
+        elevation: 0.0,
+        leading: IconButton(
+          onPressed: () {
+            controller.appServices.pageController.jumpToPage(0);
+            controller.appServices.currentIndex.value = 0;
+          },
+          icon: const Icon(Icons.arrow_back_ios_new_rounded, size: 22),
+        ),
+      ),
       body: RefreshIndicator(
         onRefresh: () async {
           controller.orders.value = <OrderDatum>[];
@@ -34,7 +45,7 @@ class RequestsView extends GetView<RequestsController> {
         color: Colors.white,
         displacement: 0.0,
         child: NestedScrollView(
-          physics: const NeverScrollableScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
           headerSliverBuilder: (context, innerBoxIsScrolled) => [
             SliverToBoxAdapter(
               child: Container(
@@ -57,6 +68,8 @@ class RequestsView extends GetView<RequestsController> {
                         },
                       ),
                     ),
+                    const SizedBox(width: 12),
+                    const RequestsFilterButton(),
                   ],
                 ),
               ),
@@ -113,7 +126,15 @@ class RequestsView extends GetView<RequestsController> {
                   ),
                   itemBuilder: (context, index) {
                     if (index < orders.length) {
-                      return OrderCard(order: orders[index]);
+                      return InkWell(
+                        onTap: () {
+                          controller.appServices.orderId.value =
+                              orders[index].id!;
+                          Get.toNamed(Routes.requestDetails);
+                        },
+                        borderRadius: BorderRadius.circular(10),
+                        child: OrderCard(order: orders[index]),
+                      );
                     } else {
                       return const OrderCardShimmer();
                     }

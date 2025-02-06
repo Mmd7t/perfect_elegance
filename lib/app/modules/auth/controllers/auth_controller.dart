@@ -32,7 +32,7 @@ class AuthController extends GetxController {
     if (res != null) {
       if (res['code'] == 200) {
         appServices.saveAccessToken(res['data']['token']);
-        Get.offNamed(Routes.main);
+        Get.offNamed(Routes.stores);
       } else if (res['code'] == 422) {
         ErrorResponseModel errorResponse =
             ErrorResponseModel.fromJson(res['data']);

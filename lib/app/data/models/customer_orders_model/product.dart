@@ -1,4 +1,4 @@
-class ProductModel {
+class Product {
   int? id;
   int? userId;
   int? storeId;
@@ -26,12 +26,8 @@ class ProductModel {
   String? fullImage;
   List<dynamic>? sizesList;
   List<dynamic>? promptDeliveryProductIds;
-  dynamic gender;
-  dynamic category;
-  dynamic brand;
-  List<dynamic>? variants;
 
-  ProductModel({
+  Product({
     this.id,
     this.userId,
     this.storeId,
@@ -59,52 +55,42 @@ class ProductModel {
     this.fullImage,
     this.sizesList,
     this.promptDeliveryProductIds,
-    this.gender,
-    this.category,
-    this.brand,
-    this.variants,
   });
 
-  factory ProductModel.fromJson(Map<String, dynamic> json) {
-    return ProductModel(
-      id: json['id'] as int?,
-      userId: json['user_id'] as int?,
-      storeId: json['store_id'] as int?,
-      brandId: json['brand_id'] as dynamic,
-      genederId: json['geneder_id'] as dynamic,
-      categoryId: json['category_id'] as dynamic,
-      dollarPurchasingPrice: json['dollar_purchasing_price'] as int?,
-      dinarSellingPrice: json['dinar_selling_price'] as int?,
-      sellFactor: json['sell_factor'] as dynamic,
-      name: json['name'] as String?,
-      image: json['image'] as dynamic,
-      barcode: json['barcode'] as dynamic,
-      weight: json['weight'] as dynamic,
-      assignWeightAt: json['assign_weight_at'] as dynamic,
-      purchasesLink: json['purchases_link'] as String?,
-      sku: json['sku'] as String?,
-      notes: json['notes'] as dynamic,
-      type: json['type'] as int?,
-      createDate: json['create_date'] as String?,
-      deletedAt: json['deleted_at'] as dynamic,
-      deleted: json['deleted'] as int?,
-      createdAt: json['created_at'] == null
-          ? null
-          : DateTime.parse(json['created_at'] as String),
-      updatedAt: json['updated_at'] == null
-          ? null
-          : DateTime.parse(json['updated_at'] as String),
-      liraPurchasingPrice: json['lira_purchasing_price'] as dynamic,
-      fullImage: json['full_image'] as String?,
-      sizesList: json['SizesList'] as List<dynamic>?,
-      promptDeliveryProductIds:
-          json['prompt_delivery_product_ids'] as List<dynamic>?,
-      gender: json['gender'] as dynamic,
-      category: json['category'] as dynamic,
-      brand: json['brand'] as dynamic,
-      variants: json['variants'] as List<dynamic>?,
-    );
-  }
+  factory Product.fromJson(Map<String, dynamic> json) => Product(
+        id: json['id'] as int?,
+        userId: json['user_id'] as int?,
+        storeId: json['store_id'] as int?,
+        brandId: json['brand_id'] as dynamic,
+        genederId: json['geneder_id'] as dynamic,
+        categoryId: json['category_id'] as dynamic,
+        dollarPurchasingPrice: json['dollar_purchasing_price'] as int?,
+        dinarSellingPrice: json['dinar_selling_price'] as int?,
+        sellFactor: json['sell_factor'] as dynamic,
+        name: json['name'] as String?,
+        image: json['image'] as dynamic,
+        barcode: json['barcode'] as dynamic,
+        weight: json['weight'] as dynamic,
+        assignWeightAt: json['assign_weight_at'] as dynamic,
+        purchasesLink: json['purchases_link'] as String?,
+        sku: json['sku'] as String?,
+        notes: json['notes'] as dynamic,
+        type: json['type'] as int?,
+        createDate: json['create_date'] as String?,
+        deletedAt: json['deleted_at'] as dynamic,
+        deleted: json['deleted'] as int?,
+        createdAt: json['created_at'] == null
+            ? null
+            : DateTime.parse(json['created_at'] as String),
+        updatedAt: json['updated_at'] == null
+            ? null
+            : DateTime.parse(json['updated_at'] as String),
+        liraPurchasingPrice: json['lira_purchasing_price'] as dynamic,
+        fullImage: json['full_image'] as String?,
+        sizesList: json['SizesList'] as List<dynamic>?,
+        promptDeliveryProductIds:
+            json['prompt_delivery_product_ids'] as List<dynamic>?,
+      );
 
   Map<String, dynamic> toJson() => {
         'id': id,
@@ -134,9 +120,5 @@ class ProductModel {
         'full_image': fullImage,
         'SizesList': sizesList,
         'prompt_delivery_product_ids': promptDeliveryProductIds,
-        'gender': gender,
-        'category': category,
-        'brand': brand,
-        'variants': variants,
       };
 }

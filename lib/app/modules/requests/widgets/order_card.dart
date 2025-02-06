@@ -28,7 +28,7 @@ class OrderCard extends GetWidget<RequestsController> {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 15, vertical: 4),
                       decoration: BoxDecoration(
-                        color: (order.status == "قائمة"
+                        color: (order.status == "قيد الإنتظار"
                                 ? Constants.pending
                                 : order.status == "جديدة"
                                     ? Constants.success
@@ -40,7 +40,7 @@ class OrderCard extends GetWidget<RequestsController> {
                       ),
                       child: "${order.status}".caption(
                           weight: FontWeight.bold,
-                          color: order.status == "قائمة"
+                          color: order.status == "قيد الإنتظار"
                               ? Constants.pending
                               : order.status == "جديدة"
                                   ? Constants.success

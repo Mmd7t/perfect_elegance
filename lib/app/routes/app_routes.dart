@@ -16,6 +16,8 @@ class Routes {
   static const String settlements = '/settlements';
   static const String onboarding = '/onboarding';
   static const String notifications = '/notifications';
+  static const String requestDetails = '/request-details';
+  static const String addProductsRequest = '/add-procducts-request';
   static const String addRequest = '/add-request';
   static const String addCustomer = '/add-customer';
   static const String addNewProduct = '/add-new-product';
@@ -29,4 +31,6 @@ class Routes {
   static const String terms = '/terms';
   static const String policy = '/policy';
   static const String returns = '/returns';
+  static const String stores = '/stores';
+  static const String editCustomer = '/edit-customer';
 }

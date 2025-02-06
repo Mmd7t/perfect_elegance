@@ -5,6 +5,7 @@ class CustomerModel {
   String? phone;
   String? address;
   String? ordersCount;
+  int? active;
 
   CustomerModel({
     this.id,
@@ -13,6 +14,7 @@ class CustomerModel {
     this.phone,
     this.address,
     this.ordersCount,
+    this.active,
   });
 
   factory CustomerModel.fromJson(Map<String, dynamic> json) {
@@ -23,6 +25,7 @@ class CustomerModel {
       phone: json['phone'] as String?,
       address: json['address'] as String?,
       ordersCount: json['order_count'].toString(),
+      active: json['active'] as int?,
     );
   }
 }

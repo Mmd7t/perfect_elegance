@@ -4,8 +4,8 @@ import 'package:perfect_elegance/app/core/widgets/detail_card.dart';
 import 'package:perfect_elegance/app/core/widgets/global_appbar.dart';
 import 'package:perfect_elegance/app/data/constants/constants.dart';
 import 'package:perfect_elegance/app/data/extensions/extensions.dart';
+import 'package:perfect_elegance/app/data/models/package_details_model/product_order.dart';
 import 'package:perfect_elegance/app/modules/shipments/controllers/shipment_details_controller.dart';
-import 'package:perfect_elegance/app/modules/shipments/widgets/package_history.dart';
 
 class ShipmentDetailsView extends GetView<ShipmentDetailsController> {
   const ShipmentDetailsView({super.key});
@@ -106,30 +106,146 @@ class ShipmentDetailsView extends GetView<ShipmentDetailsController> {
                         ],
                       ),
                       const SizedBox(height: 10),
-                      DetailCard(
-                        title: "بيانات المتجر",
-                        id: "144",
-                        leadingTitle: "قيد الإنتظار",
-                        leadingColor: Constants.pending,
-                        subtitles: [
-                          "تاريخ الانشاء::".bodyMedium(),
-                          const SizedBox(height: 5),
-                          "الاستلام:".bodyMedium(),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          "منتجات الطلب".titleSmall(),
+                          const SizedBox(height: 15),
+                          ListView.separated(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              ProductOrder product = controller
+                                  .packageData.value.productOrders[index];
+                              return Column(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      "#${product.id}".body(
+                                          weight: FontWeight.bold,
+                                          color: Colors.black),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 15),
+                                  Container(
+                                    width: Get.width,
+                                    alignment: Alignment.center,
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 15,
+                                      vertical: 12,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: Constants.primary
+                                          .withValues(alpha: 0.08),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    child: "SKU: ${product.sku}".caption(
+                                      color: Constants.primary,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 15),
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        flex: 2,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            "اسم المنتج:".bodyMedium(),
+                                            const SizedBox(height: 5),
+                                            "المقاس:".bodyMedium(),
+                                            const SizedBox(height: 5),
+                                            "سعر الشراء:".bodyMedium(),
+                                            const SizedBox(height: 5),
+                                            "سعر البيع بالدينار الليبي:"
+                                                .bodyMedium(),
+                                            const SizedBox(height: 5),
+                                            "رابط الشراء:".bodyMedium(),
+                                          ],
+                                        ),
+                                      ),
+                                      Expanded(
+                                        flex: 1,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            "${product.name}"
+                                                .subtitle(color: Colors.black),
+                                            const SizedBox(height: 5),
+                                            "${product.size}"
+                                                .subtitle(color: Colors.black),
+                                            const SizedBox(height: 5),
+                                            "${product.dollarPurchasingPrice} USD"
+                                                .subtitle(color: Colors.black),
+                                            const SizedBox(height: 5),
+                                            "${product.dinarSellingPrice} د.ل"
+                                                .subtitle(color: Colors.black),
+                                            const SizedBox(height: 5),
+                                            InkWell(
+                                              onTap: () {
+                                                launch(Uri.parse(
+                                                    product.purchasesLink ??
+                                                        ""));
+                                              },
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: "eye".iconColored(
+                                                    color: Constants.primary),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              );
+                            },
+                            separatorBuilder: (context, index) => const Divider(
+                              height: 40,
+                              color: Constants.grey3,
+                            ),
+                            itemCount: controller
+                                .packageData.value.productOrders.length,
+                          ),
                         ],
-                        subValues: [
-                          "24-12-2024".subtitle(color: Colors.black),
-                          const SizedBox(height: 5),
-                          "24-12-2024".subtitle(color: Colors.black),
-                        ],
-                      ),
-                      const SizedBox(height: 10),
-                      const PackageHistory(),
+                      ).decorate(padding: 15),
                       const SizedBox(height: 10),
                     ],
                   ).decorate(),
                 ],
               ),
             );
+          }
+        }
+      }),
+      floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
+      floatingActionButton: Obx(() {
+        if (controller.isPackagesLoading.value) {
+          return const SizedBox();
+        } else {
+          if (controller.packageData.value.status != null) {
+            if (controller.packageData.value.status == "قيد الإنتظار") {
+              return FloatingActionButton.extended(
+                onPressed: () {
+                  controller.restorePackage(controller.packageData.value.id!);
+                },
+                extendedPadding: const EdgeInsets.symmetric(horizontal: 30),
+                label: "استرجاع".button(color: Colors.white),
+                backgroundColor: Constants.cancel,
+              );
+            } else {
+              return const SizedBox();
+            }
+          } else {
+            return const SizedBox();
           }
         }
       }),

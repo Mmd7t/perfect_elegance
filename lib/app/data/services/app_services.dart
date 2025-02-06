@@ -2,6 +2,11 @@ import 'package:perfect_elegance/app/data/extensions/extensions.dart';
 import 'package:perfect_elegance/app/data/providers/shared_prefs.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:perfect_elegance/app/modules/main/views/home_view.dart';
+import 'package:perfect_elegance/app/modules/profile/views/profile_view.dart';
+import 'package:perfect_elegance/app/modules/requests/views/requests_view.dart';
+import 'package:perfect_elegance/app/modules/settlements/views/settlements_view.dart';
+import 'package:perfect_elegance/app/modules/shipments/views/shipments_view.dart';
 import '../constants/constants.dart';
 
 class AppServices extends GetxService {
@@ -15,17 +20,53 @@ class AppServices extends GetxService {
     getUserEmail();
     getUserPhone();
     getfirsttime();
+    getIsVerified();
+    getStoreName();
   }
 
   /*--------------------------------------------------------------------------*/
   /*------------------------------  Variables  -------------------------------*/
   /*--------------------------------------------------------------------------*/
+  RxInt currentIndex = 0.obs;
+  final List<String> navBarIcons = [
+    'home',
+    'request',
+    'truck',
+    'settlement',
+    'settings',
+  ];
+  final List<String> activeNavBarIcons = [
+    'home-fill',
+    'request-fill',
+    'truck-fill',
+    'settlement-fill',
+    'settings-fill',
+  ];
+  final List<String> navBarTitles = [
+    'الرئيسية',
+    'الطلبات',
+    'الشحنات',
+    'التسوية',
+    'حسابي',
+  ];
+
+  final List<Widget> navBarPages = [
+    const HomeView(),
+    const RequestsView(),
+    const ShipmentsView(),
+    const SettlementsView(),
+    const ProfileView(),
+  ];
+
+  final PageController pageController = PageController();
+
   RxBool notificationsOn = RxBool(true);
   RxBool isSignup = RxBool(false);
 
   RxInt packageId = 0.obs;
   RxInt customerId = 0.obs;
   RxInt ticketId = 0.obs;
+  RxInt orderId = 0.obs;
 
   RxString accessToken = RxString('');
   RxString userName = RxString('');
@@ -39,44 +80,36 @@ class AppServices extends GetxService {
   RxInt userId = RxInt(0);
   RxString? pinCode;
   RxBool isFirstTime = true.obs;
+  RxBool isVerified = false.obs;
+  RxString storeName = "".obs;
 
   /*--------------------------------------------------------------------------*/
   /*-------------------------  Control Toggle Bars  --------------------------*/
   /*--------------------------------------------------------------------------*/
-  PageController pageController = PageController(initialPage: 0);
-  RxInt currentPage = 0.obs;
-
-  animateToPage(int page) {
-    pageController.animateToPage(
-      page,
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.easeInOut,
-    );
-  }
 
   pickImage(VoidCallback onCameraTap, VoidCallback onGalleryTap) async {
     Get.defaultDialog(
-      title: 'Select Image'.tr,
+      title: 'أختر صورة',
       backgroundColor: Colors.white,
       titleStyle: Get.textTheme.titleMedium!.copyWith(
         color: Get.theme.primaryColor,
         fontWeight: FontWeight.bold,
-        fontFamily: (Get.locale == const Locale('ar')) ? 'Almarai' : 'Poppin',
+        fontFamily: 'Cairo',
       ),
-      middleText: 'Select an image from your device'.tr,
+      middleText: 'أختر صورة من جهازك'.tr,
       middleTextStyle: Get.textTheme.bodyMedium!.copyWith(
         color: Colors.grey,
-        fontFamily: (Get.locale == const Locale('ar')) ? 'Almarai' : 'Poppin',
+        fontFamily: 'Cairo',
       ),
       titlePadding: const EdgeInsets.all(20),
       actions: [
         TextButton(
           onPressed: onCameraTap,
-          child: 'Camera'.tr.bodyMedium(color: Constants.grey2),
+          child: 'الكاميرا'.tr.bodyMedium(color: Constants.grey2),
         ),
         TextButton(
           onPressed: onGalleryTap,
-          child: 'Gallery'.tr.bodyMedium(color: Constants.grey2),
+          child: 'المعرض'.tr.bodyMedium(color: Constants.grey2),
         ),
       ],
     );
@@ -89,6 +122,16 @@ class AppServices extends GetxService {
   void setIsFirstTime(bool val) async {
     isFirstTime = val.obs;
     SharedPrefsHelper.storeisFirstTime(val);
+  }
+
+  void setStoreName(String val) async {
+    storeName = val.obs;
+    SharedPrefsHelper.storeStoreName(val);
+  }
+
+  void setIsVerified(bool val) async {
+    isVerified = val.obs;
+    SharedPrefsHelper.storeisverified(val);
   }
 
   void saveAccessToken(String token) {
@@ -135,6 +178,22 @@ class AppServices extends GetxService {
     if (data != null) {
       accessToken = data.obs;
       debugPrint('tokennnnnnnnnnnnnnnnnn :: $accessToken');
+    }
+  }
+
+  void getStoreName() async {
+    String? data = await SharedPrefsHelper.getStoreName();
+    if (data != null) {
+      storeName = data.obs;
+      debugPrint('Store Name :: $storeName');
+    }
+  }
+
+  void getIsVerified() async {
+    bool? data = await SharedPrefsHelper.getIsVerified();
+    if (data != null) {
+      isVerified = data.obs;
+      debugPrint('verified :: $isVerified');
     }
   }
 
@@ -205,16 +264,6 @@ class AppServices extends GetxService {
     userEmail.value = '';
     userBirthDate.value = '';
     userGender.value = '';
-    SharedPrefsHelper.removeToken();
-    SharedPrefsHelper.removeUserId();
-    SharedPrefsHelper.removeUserName();
-    SharedPrefsHelper.removeUserEmail();
-    SharedPrefsHelper.removeUserPhone();
-    SharedPrefsHelper.removeUserImg();
-    SharedPrefsHelper.removeNotificationStatus();
-    SharedPrefsHelper.removeUserBirthDate();
-    SharedPrefsHelper.removeUserGender();
-    SharedPrefsHelper.removeCountry();
-    SharedPrefsHelper.removeCurrency();
+    SharedPrefsHelper.removeAll();
   }
 }

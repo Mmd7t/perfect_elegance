@@ -50,8 +50,8 @@ class MenuView extends GetView<MainController> {
                 onTap: () {
                   controller.animationController!.reverse();
                   controller.isMenuOpen.value = false;
-                  controller.pageController.jumpToPage(4);
-                  controller.currentIndex.value = 4;
+                  controller.appServices.pageController.jumpToPage(4);
+                  controller.appServices.currentIndex.value = 4;
                 },
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
@@ -64,8 +64,8 @@ class MenuView extends GetView<MainController> {
                 onTap: () {
                   controller.animationController!.reverse();
                   controller.isMenuOpen.value = false;
-                  controller.pageController.jumpToPage(1);
-                  controller.currentIndex.value = 1;
+                  controller.appServices.pageController.jumpToPage(1);
+                  controller.appServices.currentIndex.value = 1;
                 },
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
@@ -91,8 +91,8 @@ class MenuView extends GetView<MainController> {
                 onTap: () {
                   controller.animationController!.reverse();
                   controller.isMenuOpen.value = false;
-                  controller.pageController.jumpToPage(2);
-                  controller.currentIndex.value = 2;
+                  controller.appServices.pageController.jumpToPage(2);
+                  controller.appServices.currentIndex.value = 2;
                 },
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
@@ -118,8 +118,8 @@ class MenuView extends GetView<MainController> {
                 onTap: () {
                   controller.animationController!.reverse();
                   controller.isMenuOpen.value = false;
-                  controller.pageController.jumpToPage(3);
-                  controller.currentIndex.value = 3;
+                  controller.appServices.pageController.jumpToPage(3);
+                  controller.appServices.currentIndex.value = 3;
                 },
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),

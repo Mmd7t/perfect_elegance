@@ -7,7 +7,7 @@ class Datum {
   int? storeId;
   int? customerId;
   int? qty;
-  int? totalPrice;
+  String? totalPrice;
   dynamic address;
   dynamic notes;
   dynamic hint;
@@ -23,9 +23,9 @@ class Datum {
   int? depositPaid;
   dynamic tylncUrl;
   String? createDate;
-  int? shipmentPrice;
+  String? shipmentPrice;
   int? cancelPurchasing;
-  int? fullPrice;
+  String? fullPrice;
   DateTime? createdAt;
   DateTime? updatedAt;
   int? inStoreProductOrdersCount;
@@ -98,7 +98,7 @@ class Datum {
         storeId: json['store_id'] as int?,
         customerId: json['customer_id'] as int?,
         qty: json['qty'] as int?,
-        totalPrice: json['total_price'] as int?,
+        totalPrice: json['total_price'].toString(),
         address: json['address'] as dynamic,
         notes: json['notes'] as dynamic,
         hint: json['hint'] as dynamic,
@@ -114,9 +114,9 @@ class Datum {
         depositPaid: json['deposit_paid'] as int?,
         tylncUrl: json['tylnc_url'] as dynamic,
         createDate: json['create_date'] as String?,
-        shipmentPrice: json['shipment_price'] as int?,
+        shipmentPrice: json['shipment_price'].toString(),
         cancelPurchasing: json['cancelPurchasing'] as int?,
-        fullPrice: json['full_price'] as int?,
+        fullPrice: json['full_price'].toString(),
         createdAt: json['created_at'] == null
             ? null
             : DateTime.parse(json['created_at'] as String),

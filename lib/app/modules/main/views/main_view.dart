@@ -75,9 +75,9 @@ class MainView extends GetView<MainController> {
                           backgroundColor: const Color(0xFFF0F2F5),
                           body: PageView.builder(
                             physics: const NeverScrollableScrollPhysics(),
-                            controller: controller.pageController,
+                            controller: controller.appServices.pageController,
                             itemBuilder: (context, index) =>
-                                controller.navBarPages[index],
+                                controller.appServices.navBarPages[index],
                             itemCount: 5,
                           ),
                           bottomNavigationBar: Obx(
@@ -97,25 +97,28 @@ class MainView extends GetView<MainController> {
                                       (index) => InkWell(
                                         borderRadius: BorderRadius.circular(50),
                                         onTap: () {
-                                          controller.pageController
+                                          controller.appServices.pageController
                                               .jumpToPage(index);
-                                          controller.currentIndex.value = index;
+                                          controller.appServices.currentIndex
+                                              .value = index;
                                         },
                                         child: Column(
                                           mainAxisSize: MainAxisSize.min,
                                           children: [
-                                            (controller.currentIndex.value ==
+                                            (controller.appServices.currentIndex
+                                                            .value ==
                                                         index
-                                                    ? controller
+                                                    ? controller.appServices
                                                             .activeNavBarIcons[
                                                         index]
-                                                    : controller
+                                                    : controller.appServices
                                                         .navBarIcons[index])
                                                 .iconColored(),
                                             const SizedBox(height: 2),
-                                            controller.navBarTitles[index]
+                                            controller
+                                                .appServices.navBarTitles[index]
                                                 .button(
-                                              color: controller
+                                              color: controller.appServices
                                                           .currentIndex.value ==
                                                       index
                                                   ? Get.theme.primaryColor

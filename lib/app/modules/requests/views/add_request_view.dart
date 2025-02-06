@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:perfect_elegance/app/core/enums/enums.dart';
+import 'package:perfect_elegance/app/core/theme/theme.dart';
+import 'package:perfect_elegance/app/core/widgets/custom_textfield.dart';
 import 'package:perfect_elegance/app/core/widgets/global_appbar.dart';
 import 'package:perfect_elegance/app/core/widgets/global_button.dart';
-import 'package:perfect_elegance/app/core/widgets/search_card.dart';
+import 'package:perfect_elegance/app/core/widgets/global_textfield.dart';
 import 'package:perfect_elegance/app/data/constants/constants.dart';
 import 'package:perfect_elegance/app/data/extensions/extensions.dart';
-import 'package:perfect_elegance/app/routes/app_pages.dart';
+import 'package:perfect_elegance/app/modules/requests/controllers/add_order_controller.dart';
+import 'package:perfect_elegance/app/modules/requests/widgets/customer_section.dart';
+import 'package:perfect_elegance/app/modules/requests/widgets/products_section.dart';
 
-class AddRequestView extends StatelessWidget {
+class AddRequestView extends GetView<AddOrderController> {
   const AddRequestView({super.key});
 
   @override
@@ -17,312 +22,136 @@ class AddRequestView extends StatelessWidget {
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Column(
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                "بيانات الزبون".titleSmall(),
-                const SizedBox(height: 10),
-                Row(
+        child: Form(
+          key: controller.addOrderFormKey,
+          child: Column(
+            children: [
+              const CustomerSection(),
+              const SizedBox(height: 10),
+              const ProductsSection(),
+              const SizedBox(height: 10),
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SizedBox(
+                    width: Get.width,
+                    child: "الملاحظات".titleSmall(),
+                  ),
+                  const SizedBox(height: 10),
+                  CustomTextField(
+                    hintText: "ملاحظات",
+                    maxLines: 5,
+                    controller: controller.noteController,
+                  ),
+                ],
+              ).decorate(padding: 15),
+              const SizedBox(height: 10),
+              Obx(() {
+                return Column(
                   children: [
-                    const Expanded(
-                      child: SearchCard(
-                        text: "رقم الهاتف",
-                        icon: "search",
+                    CheckboxListTile.adaptive(
+                      value: controller.isDeposit.value,
+                      onChanged: (value) {
+                        controller.isDeposit.value = value!;
+                      },
+                      title: "استلام عربون".titleSmall(),
+                      controlAffinity: ListTileControlAffinity.leading,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
                       ),
                     ),
-                    const SizedBox(width: 5),
-                    IconButton.filled(
-                      onPressed: () => Get.toNamed(Routes.addCustomer),
-                      icon: const Icon(Icons.add),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 10),
-                "النتائج".subtitle(),
-                const SizedBox(height: 10),
-                Row(
-                  children: [
-                    Expanded(
-                      flex: 2,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                    const SizedBox(height: 10),
+                    if (controller.isDeposit.value) ...{
+                      Column(
                         children: [
-                          "اسم الزيون:".bodyMedium(),
-                          const SizedBox(height: 5),
-                          "رقم الهاتف:".bodyMedium(),
-                          const SizedBox(height: 5),
-                          "المدينة:".bodyMedium(),
-                          const SizedBox(height: 5),
-                          "العنوان:".bodyMedium(),
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          "هند اسامة".subtitle(color: Colors.black),
-                          const SizedBox(height: 5),
-                          Directionality(
-                              textDirection: TextDirection.ltr,
-                              child: "+20 1022 2322 22"
-                                  .subtitle(color: Colors.black)),
-                          const SizedBox(height: 5),
-                          "طرابلس".subtitle(color: Colors.black),
-                          const SizedBox(height: 5),
-                          "------------".subtitle(color: Colors.black),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ).decorate(padding: 15),
-            const SizedBox(height: 12),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                "بيانات الطلبية".titleSmall(),
-                const SizedBox(height: 10),
-                Row(
-                  children: [
-                    const Expanded(
-                      child: SearchCard(
-                        tag: 'sku search',
-                        text: "البحث عن منتج - sku",
-                        icon: "search",
-                      ),
-                    ),
-                    const SizedBox(width: 5),
-                    IconButton.filled(
-                      onPressed: () => Get.toNamed(Routes.addNewProduct),
-                      icon: const Icon(Icons.add),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    "النتائج".subtitle(),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 15, vertical: 4),
-                      decoration: BoxDecoration(
-                        color: Constants.primary.withValues(alpha: 0.08),
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      child: "SKU : sk2309208554475741"
-                          .caption(color: Constants.primary),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 10),
-                Row(
-                  children: [
-                    Expanded(
-                      flex: 2,
-                      child: "اسم المنتج:".bodyMedium(),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: Container(
-                        width: double.infinity,
-                        alignment: Alignment.center,
-                        padding: const EdgeInsets.all(4),
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.black),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: "بدلة التنورة".subtitle(color: Colors.black),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 5),
-                Row(
-                  children: [
-                    Expanded(
-                      flex: 2,
-                      child: "المقاس:".bodyMedium(),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: Container(
-                        width: double.infinity,
-                        alignment: Alignment.center,
-                        padding: const EdgeInsets.all(4),
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.black),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: "xl".subtitle(color: Colors.black),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 5),
-                Row(
-                  children: [
-                    Expanded(
-                      flex: 2,
-                      child: "اللون:".bodyMedium(),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: Container(
-                        width: double.infinity,
-                        alignment: Alignment.center,
-                        padding: const EdgeInsets.all(4),
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.black),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: "xl".subtitle(color: Colors.black),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 5),
-                Row(
-                  children: [
-                    Expanded(
-                      flex: 2,
-                      child: "سعر الشراء:".bodyMedium(),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: Container(
-                        width: double.infinity,
-                        alignment: Alignment.center,
-                        padding: const EdgeInsets.all(4),
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.black),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: "0 د.ل".subtitle(color: Colors.black),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 5),
-                Row(
-                  children: [
-                    Expanded(
-                      flex: 2,
-                      child: "سعر البيع:".bodyMedium(),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: Container(
-                        width: double.infinity,
-                        alignment: Alignment.center,
-                        padding: const EdgeInsets.all(4),
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.black),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: "0 د.ل".subtitle(color: Colors.black),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 5),
-                Row(
-                  children: [
-                    Expanded(
-                      flex: 2,
-                      child: "الكمية:".bodyMedium(),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: Container(
-                        width: double.infinity,
-                        alignment: Alignment.center,
-                        padding: const EdgeInsets.all(4),
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.black),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: "4".subtitle(color: Colors.black),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 5),
-                Row(
-                  children: [
-                    Expanded(
-                      flex: 2,
-                      child: "اجمالي الكمية:".bodyMedium(),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: Container(
-                        width: double.infinity,
-                        alignment: Alignment.center,
-                        padding: const EdgeInsets.all(4),
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.black),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: "0 د.ل".subtitle(color: Colors.black),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 5),
-                Row(
-                  children: [
-                    Expanded(
-                      flex: 2,
-                      child: "الملاحظات:".bodyMedium(),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: Center(
-                        child: TextButton(
-                          onPressed: () {
-                            Get.bottomSheet(
-                              BottomSheet(
-                                onClosing: () {},
-                                builder: (context) => Padding(
-                                  padding: const EdgeInsets.all(16),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      const SizedBox(height: 10),
-                                      "الملاحظات".titleSmall(),
-                                      const SizedBox(height: 10),
-                                      "وريم إيبسوم(Lorem Ipsum) هو ببساطة نص شكلي (بمعنى أن الغاية هي الشكل وليس المحتوى) ويُستخدم في صناعات المطابع ودور النشر. كان لوريم إيبسوم ولايزال المعيار للنص الشكلي منذ القرن الخامس عشر عندما قامت مطبعة مجهولة برص مجموعة من الأحرف بشكل عشوائي أخذتها من نص،"
-                                          .body(center: true),
-                                      const SizedBox(height: 10),
-                                    ],
+                          GlobalTextField(
+                            hintText: "ادخل",
+                            title: "قيمة العربون",
+                            suffixText: "د.ل",
+                            filled: true,
+                            inputType: TextInputType.number,
+                            validator: (val) {
+                              if (val!.isEmpty) {
+                                return "الرجاء ادخال قيمة العربون";
+                              } else {
+                                return null;
+                              }
+                            },
+                            onSaved: (val) => controller.address.value = val!,
+                          ),
+                          const SizedBox(height: 10),
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 6, horizontal: 16),
+                            decoration: BoxDecoration(
+                              color: const Color(0xFFF7F8F9),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: DropdownButtonHideUnderline(
+                              child: DropdownButton(
+                                value: controller.deliveryOn.value ==
+                                        DeliveryOn.init
+                                    ? null
+                                    : controller.deliveryOn.value.name,
+                                borderRadius: BorderRadius.circular(10),
+                                hint: "على حساب"
+                                    .bodyMedium(color: Constants.grey4),
+                                isExpanded: true,
+                                items: [
+                                  DropdownMenuItem(
+                                    value: "market",
+                                    child: "المتجر".bodyMedium(),
                                   ),
-                                ),
+                                  DropdownMenuItem(
+                                    value: "customer",
+                                    child: "الزبون".bodyMedium(),
+                                  ),
+                                ],
+                                onChanged: (val) {
+                                  if (val == "market") {
+                                    controller.deliveryOn.value =
+                                        DeliveryOn.market;
+                                  } else {
+                                    controller.deliveryOn.value =
+                                        DeliveryOn.customer;
+                                  }
+                                },
                               ),
-                            );
-                          },
-                          child: "عرض".subtitle(color: Get.theme.primaryColor),
-                        ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
+                    },
                   ],
-                ),
-              ],
-            ).decorate(padding: 15),
-          ],
+                );
+              }),
+              const SizedBox(height: 20),
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: Padding(
-        padding:
-            const EdgeInsets.symmetric(horizontal: 16).copyWith(bottom: 25),
+        padding: const EdgeInsets.symmetric(horizontal: 16)
+            .copyWith(bottom: 25, top: 8),
         child: GlobalButton(
-          onTap: () {},
-          text: "التالي",
+          onTap: () {
+            if (controller.addOrderFormKey.currentState!.validate()) {
+              controller.addOrderFormKey.currentState!.save();
+              if (controller.customer.value.id == null) {
+                Ui.errorGetBar(message: "الرجاء اختيار عميل");
+              } else if (controller.products.isEmpty) {
+                Ui.errorGetBar(message: "الرجاء اضافة منتج");
+              } else {
+                if (controller.deliveryOn.value == DeliveryOn.init) {
+                  Ui.errorGetBar(
+                      message: "الرجاء قم بتحديد العربون على حساب من");
+                } else {
+                  controller.addStore();
+                }
+              }
+            }
+          },
+          text: "اضافة",
         ),
       ),
     );

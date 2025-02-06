@@ -21,4 +21,30 @@ enum TicketPriorityType { low, medium, high }
 
 enum TransactionStatus { withdraw, deposit }
 
-enum OrderStatusSearch { new1, onGoing, canceled, complete, pendingDelivery }
+enum OrderStatusSearch {
+  init,
+  new1,
+  onGoing,
+  canceled,
+  complete,
+  pendingDelivery;
+
+  @override
+  String toString() {
+    if (name == 'new1') {
+      return 'New';
+    } else if (name == 'onGoing') {
+      return 'OnGoing';
+    } else if (name == 'canceled') {
+      return 'Canceled';
+    } else if (name == 'complete') {
+      return 'Complete';
+    } else if (name == 'pendingDelivery') {
+      return 'PendingDelivery';
+    } else {
+      return '';
+    }
+  }
+}
+
+enum DeliveryOn { market, customer, init }

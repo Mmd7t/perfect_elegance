@@ -229,4 +229,47 @@ class SharedPrefsHelper {
     await initPrefs();
     prefs!.remove('isFirstTime');
   }
+
+/*----------------------------------------------------------------------------*/
+/*--------------------------------  First time  --------------------------------*/
+/*----------------------------------------------------------------------------*/
+  static void storeisverified(bool val) async {
+    await initPrefs();
+    prefs!.setBool('isVerified', val);
+  }
+
+  static Future<bool?> getIsVerified() async {
+    await initPrefs();
+    bool? isVerifiedSaved = prefs!.getBool('isVerified');
+    return isVerifiedSaved;
+  }
+
+  static removeIsVerified() async {
+    await initPrefs();
+    prefs!.remove('isVerified');
+  }
+
+/*----------------------------------------------------------------------------*/
+/*--------------------------------  First time  --------------------------------*/
+/*----------------------------------------------------------------------------*/
+  static void storeStoreName(String val) async {
+    await initPrefs();
+    prefs!.setString('storeName', val);
+  }
+
+  static Future<String?> getStoreName() async {
+    await initPrefs();
+    String? storeName = prefs!.getString('storeName');
+    return storeName;
+  }
+
+  static removeStoreName() async {
+    await initPrefs();
+    prefs!.remove('storeName');
+  }
+
+  static removeAll() async {
+    await initPrefs();
+    prefs!.clear();
+  }
 }

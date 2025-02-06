@@ -29,8 +29,7 @@ class ShipmentsProvider extends ApiProvider {
 
   // NOTE :- GET Packages
   Future<Map<String, dynamic>?> getPackageDetails(int id) async {
-    Response<Map<String, dynamic>?> res =
-        await get<Map<String, dynamic>?>('packages/$id/show', headers: {
+    Response res = await get('packages/$id/show', headers: {
       'Accept': 'application/json',
       'Authorization': 'Bearer ${Get.find<AppServices>().accessToken.value}',
     });
@@ -42,6 +41,20 @@ class ShipmentsProvider extends ApiProvider {
         'code': res.statusCode!,
         'data': res.body as Map<String, dynamic>,
       };
+    }
+  }
+
+  // NOTE :- GET Packages
+  Future<int?> postRestore(int id) async {
+    Response res = await post('packages/$id/restore', {}, headers: {
+      'Accept': 'application/json',
+      'Authorization': 'Bearer ${Get.find<AppServices>().accessToken.value}',
+    });
+    if (res.status.isServerError || res.status.connectionError) {
+      return null;
+    } else {
+      Get.log(res.statusCode.toString());
+      return res.statusCode;
     }
   }
 }

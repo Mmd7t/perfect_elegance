@@ -3,8 +3,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 class Constants {
   static const String baseUrl = 'https://testing.peg.ly/api/store/v1/';
-  static const String baseImagesUrl =
-      'https://testing.peg.ly/assets/images/vehicle/';
+  // static const String baseUrl = 'https://peg-app.com/api/store/v1/';
 
   static const Color primary = Color(0xFF1857CD);
   static const Color secondary = Color.fromARGB(255, 0, 0, 0);

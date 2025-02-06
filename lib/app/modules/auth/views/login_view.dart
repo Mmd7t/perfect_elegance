@@ -133,10 +133,11 @@ class LoginView extends GetView<AuthController> {
                 children: [
                   "ليس لديك حساب؟  ".caption(),
                   InkWell(
-                      onTap: () {
-                        Get.toNamed(Routes.signup);
-                      },
-                      child: "انشاء حساب".button()),
+                    onTap: () {
+                      Get.toNamed(Routes.signup);
+                    },
+                    child: "انشاء حساب".button(),
+                  ),
                 ],
               ),
             ],

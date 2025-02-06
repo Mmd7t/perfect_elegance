@@ -8,6 +8,7 @@ import 'package:perfect_elegance/app/modules/shipments/providers/shipments_provi
 class ShipmentsController extends GetxController {
   final ShipmentsProvider provider = Get.find<ShipmentsProvider>();
   final AppServices appServices = Get.find<AppServices>();
+
   final ScrollController scrollController = ScrollController();
 
   final TextEditingController packagesSearchController =

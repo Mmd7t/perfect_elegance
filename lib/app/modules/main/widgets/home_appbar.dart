@@ -32,15 +32,6 @@ class HomeAppbar extends StatelessWidget implements PreferredSizeWidget {
             animationDuration: const Duration(milliseconds: 400),
             backgroundColor: Get.theme.primaryColor.withValues(alpha: 0.05),
           ),
-          icon: 'search'.iconColored(color: Get.theme.primaryColor, size: 20),
-        ),
-        IconButton(
-          onPressed: () => Get.toNamed(Routes.notifications),
-          style: IconButton.styleFrom(
-            highlightColor: Get.theme.primaryColor.withValues(alpha: 0.2),
-            animationDuration: const Duration(milliseconds: 400),
-            backgroundColor: Get.theme.primaryColor.withValues(alpha: 0.05),
-          ),
           icon: 'notifications'.iconColored(color: Get.theme.primaryColor),
         ),
         const SizedBox(width: 5),

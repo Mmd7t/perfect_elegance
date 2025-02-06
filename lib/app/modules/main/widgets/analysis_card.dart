@@ -6,45 +6,51 @@ class AnalysisCard extends StatelessWidget {
   final String title;
   final String number;
   final String icon;
+  final VoidCallback onTap;
   const AnalysisCard({
     super.key,
     required this.color,
     required this.title,
     required this.number,
     required this.icon,
+    required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          height: 80,
-          width: 5,
-          decoration: BoxDecoration(
-            color: color,
-            borderRadius: const BorderRadiusDirectional.horizontal(
-              start: Radius.circular(10),
+    return InkWell(
+      borderRadius: BorderRadius.circular(8),
+      onTap: onTap,
+      child: Row(
+        children: [
+          Container(
+            height: 80,
+            width: 5,
+            decoration: BoxDecoration(
+              color: color,
+              borderRadius: const BorderRadiusDirectional.horizontal(
+                start: Radius.circular(10),
+              ),
             ),
           ),
-        ),
-        const SizedBox(width: 8),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              number.title(),
-              const SizedBox(height: 5),
-              title.caption(weight: FontWeight.bold),
-            ],
+          const SizedBox(width: 8),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                number.title(),
+                const SizedBox(height: 5),
+                title.caption(weight: FontWeight.bold),
+              ],
+            ),
           ),
-        ),
-        CircleAvatar(
-          backgroundColor: color,
-          child: icon.iconColored(size: 18),
-        ),
-        const SizedBox(width: 10),
-      ],
-    ).decorate();
+          CircleAvatar(
+            backgroundColor: color,
+            child: icon.iconColored(size: 18),
+          ),
+          const SizedBox(width: 10),
+        ],
+      ).decorate(),
+    );
   }
 }

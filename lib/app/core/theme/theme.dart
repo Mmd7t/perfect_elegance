@@ -37,7 +37,7 @@ class Ui {
         messageText: Text(
           message,
           style: Get.textTheme.bodySmall!.merge(
-            const TextStyle(color: Colors.white),
+            const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
           ),
         ),
         snackPosition: SnackPosition.TOP,
@@ -67,7 +67,7 @@ class Ui {
         ),
         snackPosition: SnackPosition.TOP,
         margin: const EdgeInsets.all(20),
-        backgroundColor: Get.theme.colorScheme.primary,
+        backgroundColor: Get.theme.colorScheme.error,
         icon: const Icon(
           Icons.remove_circle_outline,
           size: 32,

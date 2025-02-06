@@ -15,7 +15,7 @@ class PackageDetailsModel {
   String? status;
   String? shippingOn;
   Customer? customer;
-  List<ProductOrder>? productOrders;
+  List<ProductOrder> productOrders;
   VanexPackage? vanexPackage;
 
   PackageDetailsModel({
@@ -31,7 +31,7 @@ class PackageDetailsModel {
     this.status,
     this.shippingOn,
     this.customer,
-    this.productOrders,
+    this.productOrders = const [],
     this.vanexPackage,
   });
 
@@ -51,8 +51,8 @@ class PackageDetailsModel {
       customer: json['customer'] == null
           ? null
           : Customer.fromJson(json['customer'] as Map<String, dynamic>),
-      productOrders: (json['product_orders'] as List<dynamic>?)
-          ?.map((e) => ProductOrder.fromJson(e as Map<String, dynamic>))
+      productOrders: (json['product_orders'] as List<dynamic>)
+          .map((e) => ProductOrder.fromJson(e as Map<String, dynamic>))
           .toList(),
       vanexPackage: json['vanex_package'] == null
           ? null
@@ -60,21 +60,4 @@ class PackageDetailsModel {
               json['vanex_package'] as Map<String, dynamic>),
     );
   }
-
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'vanex_package_code': vanexPackageCode,
-        'vanex_delegate_type': vanexDelegateType,
-        'deliveryman_confirm_at': deliverymanConfirmAt,
-        'vanex_package_id': vanexPackageId,
-        'package_type': packageType,
-        'desc': desc,
-        'phone': phone,
-        'order_id': orderId,
-        'status': status,
-        'shipping_on': shippingOn,
-        'customer': customer?.toJson(),
-        'product_orders': productOrders?.map((e) => e.toJson()).toList(),
-        'vanex_package': vanexPackage?.toJson(),
-      };
 }
