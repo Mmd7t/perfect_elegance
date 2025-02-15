@@ -45,7 +45,7 @@ class LoginView extends GetView<AuthController> {
                         end: Alignment.centerRight,
                       ).createShader(bounds);
                     },
-                    child: "Perfect Elegance".headline(color: Colors.white),
+                    child: "PE Seller".headline(color: Colors.white),
                   ),
                   const SizedBox(width: 5),
                   CircleAvatar(

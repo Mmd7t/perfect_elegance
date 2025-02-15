@@ -117,8 +117,11 @@ class CustomersView extends GetView<CustomersController> {
                                 children: [
                                   "phone".iconColored(size: 16),
                                   const SizedBox(width: 8),
-                                  "${controller.customers[index].phone}"
-                                      .bodyMedium(),
+                                  Expanded(
+                                    child:
+                                        "${controller.customers[index].phone}"
+                                            .bodyMedium(),
+                                  ),
                                 ],
                               ),
                               const SizedBox(height: 6),
@@ -126,8 +129,13 @@ class CustomersView extends GetView<CustomersController> {
                                 children: [
                                   "location".iconColored(size: 16),
                                   const SizedBox(width: 8),
-                                  "${controller.customers[index].address}"
-                                      .bodyMedium(),
+                                  Expanded(
+                                    child:
+                                        "${controller.customers[index].address}"
+                                            .bodyMedium(
+                                                overflow:
+                                                    TextOverflow.ellipsis),
+                                  ),
                                 ],
                               ),
                               const SizedBox(height: 6),
@@ -135,8 +143,11 @@ class CustomersView extends GetView<CustomersController> {
                                 children: [
                                   "package".iconColored(size: 16),
                                   const SizedBox(width: 8),
-                                  "${controller.customers[index].ordersCount}"
-                                      .bodyMedium(),
+                                  Expanded(
+                                    child:
+                                        "${controller.customers[index].ordersCount}"
+                                            .bodyMedium(),
+                                  ),
                                 ],
                               ),
                             ],

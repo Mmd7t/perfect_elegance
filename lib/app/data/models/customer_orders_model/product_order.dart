@@ -19,10 +19,10 @@ class ProductOrder {
   String? type;
   dynamic purchaseId;
   dynamic packageId;
-  int? dollarOldPurchasingPrice;
-  int? dollarPurchasingPrice;
-  int? dinarOldSellingPrice;
-  int? dinarSellingPrice;
+  String? dollarOldPurchasingPrice;
+  String? dollarPurchasingPrice;
+  String? dinarOldSellingPrice;
+  String? dinarSellingPrice;
   dynamic dollarExchange;
   dynamic sellFactor;
   int? statusId;
@@ -170,10 +170,11 @@ class ProductOrder {
         type: json['type'] as String?,
         purchaseId: json['purchase_id'] as dynamic,
         packageId: json['package_id'] as dynamic,
-        dollarOldPurchasingPrice: json['dollar_old_purchasing_price'] as int?,
-        dollarPurchasingPrice: json['dollar_purchasing_price'] as int?,
-        dinarOldSellingPrice: json['dinar_old_selling_price'] as int?,
-        dinarSellingPrice: json['dinar_selling_price'] as int?,
+        dollarOldPurchasingPrice:
+            json['dollar_old_purchasing_price'].toString(),
+        dollarPurchasingPrice: json['dollar_purchasing_price'].toString(),
+        dinarOldSellingPrice: json['dinar_old_selling_price'].toString(),
+        dinarSellingPrice: json['dinar_selling_price'].toString(),
         dollarExchange: json['dollar_exchange'] as dynamic,
         sellFactor: json['sell_factor'] as dynamic,
         statusId: json['status_id'] as int?,

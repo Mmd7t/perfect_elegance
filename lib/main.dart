@@ -66,9 +66,9 @@ class MyApp extends StatelessWidget {
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
       ],
-      locale: const Locale('ar', 'EG'),
+      locale: const Locale('ar', 'LY'),
       supportedLocales: const [
-        Locale('ar', 'EG'),
+        Locale('ar', 'LY'),
       ],
       textDirection: TextDirection.rtl,
       initialRoute: AppPages.initial,
