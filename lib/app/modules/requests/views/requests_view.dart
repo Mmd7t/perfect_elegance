@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:perfect_elegance/app/core/enums/enums.dart';
 import 'package:perfect_elegance/app/core/widgets/search_card.dart';
 import 'package:perfect_elegance/app/data/extensions/extensions.dart';
 import 'package:perfect_elegance/app/data/models/all_orders_model/datum.dart';
@@ -47,6 +48,7 @@ class RequestsView extends GetView<RequestsController> {
             controller.ordersLastPage.value = 1;
             controller.orderToDateSearch.value = "";
             controller.orderFromDateSearch.value = "";
+            controller.orderStatusSearch.value = OrderStatusSearch.init;
             controller.getOrders();
           },
           backgroundColor: Get.theme.primaryColor,
@@ -90,6 +92,7 @@ class RequestsView extends GetView<RequestsController> {
                 controller.ordersLastPage.value = 1;
                 controller.orderToDateSearch.value = "";
                 controller.orderFromDateSearch.value = "";
+                controller.orderStatusSearch.value = OrderStatusSearch.init;
                 controller.getOrders();
               },
               backgroundColor: Get.theme.primaryColor,
