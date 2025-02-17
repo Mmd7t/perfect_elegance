@@ -67,44 +67,45 @@ class ShipmentDetailsView extends GetView<ShipmentDetailsController> {
                     title: "عرض بيانات شركة الشحن"
                         .subtitle(color: Get.theme.primaryColor),
                     children: [
-                      DetailCard(
-                        title: "رقم الطلبية",
-                        id: "${controller.packageData.value.vanexPackage!.data!.packageCode}",
-                        leadingTitle:
-                            "${controller.packageData.value.vanexPackage!.data!.packageType!.name}",
-                        leadingColor: Constants.primary,
-                        subtitles: [
-                          "المندوب:".bodyMedium(),
-                          const SizedBox(height: 5),
-                          "الكمية:".bodyMedium(),
-                          const SizedBox(height: 5),
-                          "سعر المنتجات:".bodyMedium(),
-                          const SizedBox(height: 5),
-                          "سعر التوصيل:".bodyMedium(),
-                          const SizedBox(height: 5),
-                          "الاجمالي:".bodyMedium(),
-                          const SizedBox(height: 5),
-                          "طريقة الدفع:".bodyMedium(),
-                        ],
-                        subValues: [
-                          "فانكس".subtitle(color: Colors.black),
-                          const SizedBox(height: 5),
-                          "${controller.packageData.value.vanexPackage!.data!.qty}"
-                              .subtitle(color: Colors.black),
-                          const SizedBox(height: 5),
-                          "${controller.packageData.value.vanexPackage!.data!.originPrice} د.ل"
-                              .subtitle(color: Colors.black),
-                          const SizedBox(height: 5),
-                          "${controller.packageData.value.vanexPackage!.data!.shippment} د.ل"
-                              .subtitle(color: Colors.black),
-                          const SizedBox(height: 5),
-                          "${controller.packageData.value.vanexPackage!.data!.total} د.ل"
-                              .subtitle(color: Colors.black),
-                          const SizedBox(height: 5),
-                          "${controller.packageData.value.vanexPackage!.data!.paymentMethode}"
-                              .subtitle(color: Colors.black),
-                        ],
-                      ),
+                      if (controller.packageData.value.vanexPackage != null)
+                        DetailCard(
+                          title: "رقم الطلبية",
+                          id: "${controller.packageData.value.vanexPackage!.data!.packageCode}",
+                          leadingTitle:
+                              "${controller.packageData.value.vanexPackage!.data!.packageType!.name}",
+                          leadingColor: Constants.primary,
+                          subtitles: [
+                            "المندوب:".bodyMedium(),
+                            const SizedBox(height: 5),
+                            "الكمية:".bodyMedium(),
+                            const SizedBox(height: 5),
+                            "سعر المنتجات:".bodyMedium(),
+                            const SizedBox(height: 5),
+                            "سعر التوصيل:".bodyMedium(),
+                            const SizedBox(height: 5),
+                            "الاجمالي:".bodyMedium(),
+                            const SizedBox(height: 5),
+                            "طريقة الدفع:".bodyMedium(),
+                          ],
+                          subValues: [
+                            "فانكس".subtitle(color: Colors.black),
+                            const SizedBox(height: 5),
+                            "${controller.packageData.value.vanexPackage!.data!.qty}"
+                                .subtitle(color: Colors.black),
+                            const SizedBox(height: 5),
+                            "${controller.packageData.value.vanexPackage!.data!.originPrice} د.ل"
+                                .subtitle(color: Colors.black),
+                            const SizedBox(height: 5),
+                            "${controller.packageData.value.vanexPackage!.data!.shippment} د.ل"
+                                .subtitle(color: Colors.black),
+                            const SizedBox(height: 5),
+                            "${controller.packageData.value.vanexPackage!.data!.total} د.ل"
+                                .subtitle(color: Colors.black),
+                            const SizedBox(height: 5),
+                            "${controller.packageData.value.vanexPackage!.data!.paymentMethode}"
+                                .subtitle(color: Colors.black),
+                          ],
+                        ),
                       const SizedBox(height: 10),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,

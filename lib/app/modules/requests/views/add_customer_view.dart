@@ -37,6 +37,7 @@ class AddCustomerView extends GetView<AddOrderController> {
               ),
               const SizedBox(height: 8),
               GlobalTextField(
+                controller: controller.phoneController,
                 hintText: "ادخل",
                 title: "رقم الهاتف",
                 filled: true,

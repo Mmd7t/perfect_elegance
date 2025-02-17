@@ -17,253 +17,269 @@ class HomeView extends GetView<MainController> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFFF0F2F5),
-      appBar: HomeAppbar(),
-      body: Obx(() {
-        if (controller.isLoading.value) {
-          return const Center(child: CircularProgressIndicator());
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) {
+        if (!controller.isATop.value) {
+          controller.scrollController.animateTo(
+            0,
+            duration: const Duration(milliseconds: 500),
+            curve: Curves.easeInOut,
+          );
         } else {
-          if (controller.homeModel.value.newOrders == null) {
-            return const Center(child: Text('لا يوجد بيانات'));
+          Get.back();
+        }
+      },
+      child: Scaffold(
+        backgroundColor: const Color(0xFFF0F2F5),
+        appBar: HomeAppbar(),
+        body: Obx(() {
+          if (controller.isLoading.value) {
+            return const Center(child: CircularProgressIndicator());
           } else {
-            return RefreshIndicator(
-              onRefresh: () async {
-                controller.getHomeData();
-              },
-              backgroundColor: Get.theme.primaryColor,
-              color: Colors.white,
-              displacement: 0.0,
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                child: Column(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 5),
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          "${controller.appServices.storeName}".subtitle(),
-                          const SizedBox(width: 12),
-                          IconButton(
-                            style: IconButton.styleFrom(
-                              backgroundColor: Get.theme.primaryColor,
+            if (controller.homeModel.value.newOrders == null) {
+              return const Center(child: Text('لا يوجد بيانات'));
+            } else {
+              return RefreshIndicator(
+                onRefresh: () async {
+                  controller.getHomeData();
+                },
+                backgroundColor: Get.theme.primaryColor,
+                color: Colors.white,
+                displacement: 0.0,
+                child: SingleChildScrollView(
+                  controller: controller.scrollController,
+                  physics: const BouncingScrollPhysics(),
+                  child: Column(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 5),
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            "${controller.appServices.storeName}".subtitle(),
+                            const SizedBox(width: 12),
+                            IconButton(
+                              style: IconButton.styleFrom(
+                                backgroundColor: Get.theme.primaryColor,
+                              ),
+                              onPressed: () {
+                                showCupertinoModalPopup(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return const StoresSheet();
+                                  },
+                                );
+                              },
+                              icon: "switch"
+                                  .iconColored(size: 20, color: Colors.white),
                             ),
-                            onPressed: () {
-                              showCupertinoModalPopup(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return const StoresSheet();
-                                },
-                              );
-                            },
-                            icon: "switch"
-                                .iconColored(size: 20, color: Colors.white),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 16),
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                      ),
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            width: Get.width,
-                            child: "التحليلات".titleSmall(),
-                          ),
-                          const SizedBox(height: 10),
-                          Row(
-                            children: [
-                              Expanded(
-                                child: AnalysisCard(
-                                  color: Constants.primary,
-                                  icon: "new-orders",
-                                  title: "الطلبات الجديدة",
-                                  number: controller.homeModel.value.newOrders
-                                      .toString(),
-                                  onTap: () {
-                                    controller.appServices.pageController
-                                        .jumpToPage(1);
-                                    controller.appServices.currentIndex.value =
-                                        1;
-                                    controller
-                                        .requestsController
-                                        .orderStatusSearch
-                                        .value = OrderStatusSearch.new1;
-                                    controller.requestsController.orders.value =
-                                        <OrderDatum>[];
-                                    controller.requestsController
-                                        .ordersCurrentPage.value = 1;
-                                    controller.requestsController.ordersLastPage
-                                        .value = 1;
-                                    controller.requestsController.getOrders();
-                                  },
-                                ),
-                              ),
-                              const SizedBox(width: 15),
-                              Expanded(
-                                child: AnalysisCard(
-                                  color: Constants.success,
-                                  icon: "hourglass",
-                                  title: "الطلبات القائمة",
-                                  number: controller
-                                      .homeModel.value.ongoingOrders
-                                      .toString(),
-                                  onTap: () {
-                                    controller.appServices.pageController
-                                        .jumpToPage(1);
-                                    controller.appServices.currentIndex.value =
-                                        1;
-                                    controller
-                                        .requestsController
-                                        .orderStatusSearch
-                                        .value = OrderStatusSearch.onGoing;
-                                    controller.requestsController.orders.value =
-                                        <OrderDatum>[];
-                                    controller.requestsController
-                                        .ordersCurrentPage.value = 1;
-                                    controller.requestsController.ordersLastPage
-                                        .value = 1;
-                                    controller.requestsController.getOrders();
-                                  },
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 15),
-                          Row(
-                            children: [
-                              Expanded(
-                                child: AnalysisCard(
-                                  color: Constants.pending,
-                                  icon: "pending-orders",
-                                  title: "الطلبات المعلقة",
-                                  number: controller
-                                      .homeModel.value.pendingOrdersCount
-                                      .toString(),
-                                  onTap: () {
-                                    controller.appServices.pageController
-                                        .jumpToPage(1);
-                                    controller.appServices.currentIndex.value =
-                                        1;
-                                    controller.requestsController
-                                            .orderStatusSearch.value =
-                                        OrderStatusSearch.pendingDelivery;
-                                    controller.requestsController.orders.value =
-                                        <OrderDatum>[];
-                                    controller.requestsController
-                                        .ordersCurrentPage.value = 1;
-                                    controller.requestsController.ordersLastPage
-                                        .value = 1;
-                                    controller.requestsController.getOrders();
-                                  },
-                                ),
-                              ),
-                              const SizedBox(width: 15),
-                              Expanded(
-                                child: AnalysisCard(
-                                  color: Constants.cancel,
-                                  icon: "cart",
-                                  title: "الطلبات قيد التسوية",
-                                  number: controller.homeModel.value
-                                      .underSattelmentProductOrders
-                                      .toString(),
-                                  onTap: () {
-                                    controller.appServices.pageController
-                                        .jumpToPage(1);
-                                    controller.appServices.currentIndex.value =
-                                        1;
-                                    controller
-                                        .requestsController
-                                        .orderStatusSearch
-                                        .value = OrderStatusSearch.complete;
-                                    controller.requestsController.orders.value =
-                                        <OrderDatum>[];
-                                    controller.requestsController
-                                        .ordersCurrentPage.value = 1;
-                                    controller.requestsController.ordersLastPage
-                                        .value = 1;
-                                    controller.requestsController.getOrders();
-                                  },
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 15),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 16),
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                      ),
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            width: Get.width,
-                            child: "ارصده المتجر".titleSmall(),
-                          ),
-                          const SizedBox(height: 10),
-                          Center(
-                            child: CircularChartWidget(
-                              balance: controller.homeModel.value.storeBalance!,
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 16),
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                        ),
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              width: Get.width,
+                              child: "التحليلات".titleSmall(),
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 15),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 16),
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                      ),
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            width: Get.width,
-                            child: "التقارير".titleSmall(),
-                          ),
-                          const SizedBox(height: 5),
-                          SizedBox(
-                            width: Get.width,
-                            child: Row(
+                            const SizedBox(height: 10),
+                            Row(
                               children: [
-                                "مقابل الاسبوع الماضي".bodyMedium(),
-                                const SizedBox(width: 5),
-                                "2.1%  ".bodyMedium(
-                                  color: Constants.cancel,
-                                  weight: FontWeight.bold,
+                                Expanded(
+                                  child: AnalysisCard(
+                                    color: Constants.primary,
+                                    icon: "new-orders",
+                                    title: "الطلبات الجديدة",
+                                    number: controller.homeModel.value.newOrders
+                                        .toString(),
+                                    onTap: () {
+                                      controller.appServices.pageController
+                                          .jumpToPage(1);
+                                      controller
+                                          .appServices.currentIndex.value = 1;
+                                      controller
+                                          .requestsController
+                                          .orderStatusSearch
+                                          .value = OrderStatusSearch.new1;
+                                      controller.requestsController.orders
+                                          .value = <OrderDatum>[];
+                                      controller.requestsController
+                                          .ordersCurrentPage.value = 1;
+                                      controller.requestsController
+                                          .ordersLastPage.value = 1;
+                                      controller.requestsController.getOrders();
+                                    },
+                                  ),
                                 ),
-                                "Arrow Down".iconColored(size: 15),
-                                const SizedBox(width: 5),
-                                "3k".title(),
+                                const SizedBox(width: 15),
+                                Expanded(
+                                  child: AnalysisCard(
+                                    color: Constants.success,
+                                    icon: "hourglass",
+                                    title: "الطلبات القائمة",
+                                    number: controller
+                                        .homeModel.value.ongoingOrders
+                                        .toString(),
+                                    onTap: () {
+                                      controller.appServices.pageController
+                                          .jumpToPage(1);
+                                      controller
+                                          .appServices.currentIndex.value = 1;
+                                      controller
+                                          .requestsController
+                                          .orderStatusSearch
+                                          .value = OrderStatusSearch.onGoing;
+                                      controller.requestsController.orders
+                                          .value = <OrderDatum>[];
+                                      controller.requestsController
+                                          .ordersCurrentPage.value = 1;
+                                      controller.requestsController
+                                          .ordersLastPage.value = 1;
+                                      controller.requestsController.getOrders();
+                                    },
+                                  ),
+                                ),
                               ],
                             ),
-                          ),
-                          const SizedBox(height: 10),
-                          const Center(child: LineChartWidget()),
-                        ],
+                            const SizedBox(height: 15),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: AnalysisCard(
+                                    color: Constants.pending,
+                                    icon: "pending-orders",
+                                    title: "الطلبات المعلقة",
+                                    number: controller
+                                        .homeModel.value.pendingOrdersCount
+                                        .toString(),
+                                    onTap: () {
+                                      controller.appServices.pageController
+                                          .jumpToPage(1);
+                                      controller
+                                          .appServices.currentIndex.value = 1;
+                                      controller.requestsController
+                                              .orderStatusSearch.value =
+                                          OrderStatusSearch.pendingDelivery;
+                                      controller.requestsController.orders
+                                          .value = <OrderDatum>[];
+                                      controller.requestsController
+                                          .ordersCurrentPage.value = 1;
+                                      controller.requestsController
+                                          .ordersLastPage.value = 1;
+                                      controller.requestsController.getOrders();
+                                    },
+                                  ),
+                                ),
+                                const SizedBox(width: 15),
+                                Expanded(
+                                  child: AnalysisCard(
+                                    color: Constants.cancel,
+                                    icon: "cart",
+                                    title: "الطلبات قيد التسوية",
+                                    number: controller.homeModel.value
+                                        .underSattelmentProductOrders
+                                        .toString(),
+                                    onTap: () {
+                                      controller.appServices.pageController
+                                          .jumpToPage(1);
+                                      controller
+                                          .appServices.currentIndex.value = 1;
+                                      controller
+                                          .requestsController
+                                          .orderStatusSearch
+                                          .value = OrderStatusSearch.complete;
+                                      controller.requestsController.orders
+                                          .value = <OrderDatum>[];
+                                      controller.requestsController
+                                          .ordersCurrentPage.value = 1;
+                                      controller.requestsController
+                                          .ordersLastPage.value = 1;
+                                      controller.requestsController.getOrders();
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                      const SizedBox(height: 15),
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 16),
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                        ),
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              width: Get.width,
+                              child: "ارصده المتجر".titleSmall(),
+                            ),
+                            const SizedBox(height: 10),
+                            Center(
+                              child: CircularChartWidget(
+                                balance:
+                                    controller.homeModel.value.storeBalance!,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 15),
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 16),
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                        ),
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              width: Get.width,
+                              child: "التقارير".titleSmall(),
+                            ),
+                            const SizedBox(height: 5),
+                            SizedBox(
+                              width: Get.width,
+                              child: Row(
+                                children: [
+                                  "مقابل الاسبوع الماضي".bodyMedium(),
+                                  const SizedBox(width: 5),
+                                  "2.1%  ".bodyMedium(
+                                    color: Constants.cancel,
+                                    weight: FontWeight.bold,
+                                  ),
+                                  "Arrow Down".iconColored(size: 15),
+                                  const SizedBox(width: 5),
+                                  "3k".title(),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                            const Center(child: LineChartWidget()),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            );
+              );
+            }
           }
-        }
-      }),
+        }),
+      ),
     );
   }
 }

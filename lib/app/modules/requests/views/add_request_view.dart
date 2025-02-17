@@ -46,85 +46,87 @@ class AddRequestView extends GetView<AddOrderController> {
                 ],
               ).decorate(padding: 15),
               const SizedBox(height: 10),
-              Obx(() {
-                return Column(
-                  children: [
-                    CheckboxListTile.adaptive(
-                      value: controller.isDeposit.value,
-                      onChanged: (value) {
-                        controller.isDeposit.value = value!;
-                      },
-                      title: "استلام عربون".titleSmall(),
-                      controlAffinity: ListTileControlAffinity.leading,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
+              Obx(
+                () {
+                  return Column(
+                    children: [
+                      CheckboxListTile.adaptive(
+                        value: controller.isDeposit.value,
+                        onChanged: (value) {
+                          controller.isDeposit.value = value!;
+                        },
+                        title: "استلام عربون".titleSmall(),
+                        controlAffinity: ListTileControlAffinity.leading,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 10),
-                    if (controller.isDeposit.value) ...{
-                      Column(
-                        children: [
-                          GlobalTextField(
-                            hintText: "ادخل",
-                            title: "قيمة العربون",
-                            suffixText: "د.ل",
-                            filled: true,
-                            inputType: TextInputType.number,
-                            validator: (val) {
-                              if (val!.isEmpty) {
-                                return "الرجاء ادخال قيمة العربون";
-                              } else {
-                                return null;
-                              }
-                            },
-                            onSaved: (val) => controller.address.value = val!,
-                          ),
-                          const SizedBox(height: 10),
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 6, horizontal: 16),
-                            decoration: BoxDecoration(
-                              color: const Color(0xFFF7F8F9),
-                              borderRadius: BorderRadius.circular(12),
+                      const SizedBox(height: 10),
+                      if (controller.isDeposit.value) ...{
+                        Column(
+                          children: [
+                            GlobalTextField(
+                              hintText: "ادخل",
+                              title: "قيمة العربون",
+                              suffixText: "د.ل",
+                              filled: true,
+                              inputType: TextInputType.number,
+                              validator: (val) {
+                                if (val!.isEmpty) {
+                                  return "الرجاء ادخال قيمة العربون";
+                                } else {
+                                  return null;
+                                }
+                              },
+                              onSaved: (val) => controller.address.value = val!,
                             ),
-                            child: DropdownButtonHideUnderline(
-                              child: DropdownButton(
-                                value: controller.deliveryOn.value ==
-                                        DeliveryOn.init
-                                    ? null
-                                    : controller.deliveryOn.value.name,
-                                borderRadius: BorderRadius.circular(10),
-                                hint: "على حساب"
-                                    .bodyMedium(color: Constants.grey4),
-                                isExpanded: true,
-                                items: [
-                                  DropdownMenuItem(
-                                    value: "market",
-                                    child: "المتجر".bodyMedium(),
-                                  ),
-                                  DropdownMenuItem(
-                                    value: "customer",
-                                    child: "الزبون".bodyMedium(),
-                                  ),
-                                ],
-                                onChanged: (val) {
-                                  if (val == "market") {
-                                    controller.deliveryOn.value =
-                                        DeliveryOn.market;
-                                  } else {
-                                    controller.deliveryOn.value =
-                                        DeliveryOn.customer;
-                                  }
-                                },
+                            const SizedBox(height: 10),
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 6, horizontal: 16),
+                              decoration: BoxDecoration(
+                                color: const Color(0xFFF7F8F9),
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              child: DropdownButtonHideUnderline(
+                                child: DropdownButton(
+                                  value: controller.deliveryOn.value ==
+                                          DeliveryOn.init
+                                      ? null
+                                      : controller.deliveryOn.value.name,
+                                  borderRadius: BorderRadius.circular(10),
+                                  hint: "على حساب"
+                                      .bodyMedium(color: Constants.grey4),
+                                  isExpanded: true,
+                                  items: [
+                                    DropdownMenuItem(
+                                      value: "market",
+                                      child: "المتجر".bodyMedium(),
+                                    ),
+                                    DropdownMenuItem(
+                                      value: "customer",
+                                      child: "الزبون".bodyMedium(),
+                                    ),
+                                  ],
+                                  onChanged: (val) {
+                                    if (val == "market") {
+                                      controller.deliveryOn.value =
+                                          DeliveryOn.market;
+                                    } else {
+                                      controller.deliveryOn.value =
+                                          DeliveryOn.customer;
+                                    }
+                                  },
+                                ),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                    },
-                  ],
-                );
-              }),
+                          ],
+                        ),
+                      },
+                    ],
+                  );
+                },
+              ),
               const SizedBox(height: 20),
             ],
           ),
@@ -142,12 +144,7 @@ class AddRequestView extends GetView<AddOrderController> {
               } else if (controller.products.isEmpty) {
                 Ui.errorGetBar(message: "الرجاء اضافة منتج");
               } else {
-                if (controller.deliveryOn.value == DeliveryOn.init) {
-                  Ui.errorGetBar(
-                      message: "الرجاء قم بتحديد العربون على حساب من");
-                } else {
-                  controller.addStore();
-                }
+                controller.addStore();
               }
             }
           },

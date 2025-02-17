@@ -38,6 +38,10 @@ class MainController extends GetxController with GetTickerProviderStateMixin {
     sizeAnimation2 = Tween(begin: 1.0, end: 0.55).animate(
       CurvedAnimation(parent: animationController!, curve: Curves.easeInOut),
     );
+
+    scrollController.addListener(() {
+      isATop.value = scrollController.position.pixels == 0;
+    });
   }
 
   Rx<HomeModel> homeModel = HomeModel().obs;
@@ -111,5 +115,14 @@ class MainController extends GetxController with GetTickerProviderStateMixin {
     super.onReady();
     getHomeData();
     getStores();
+  }
+
+  ScrollController scrollController = ScrollController();
+  RxBool isATop = true.obs;
+
+  @override
+  void onClose() {
+    scrollController.dispose();
+    super.onClose();
   }
 }

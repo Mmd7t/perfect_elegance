@@ -63,4 +63,26 @@ class ShipmentsController extends GetxController {
     getAllPackages();
     super.onReady();
   }
+
+  RxBool isATop = true.obs;
+
+  @override
+  void onInit() {
+    super.onInit();
+    scrollController.addListener(() {
+      if (scrollController.position.pixels >=
+              scrollController.position.maxScrollExtent - 200 &&
+          packagesHasMore &&
+          !isLoadingMorePackages.value) {
+        fetchNextPackages();
+      }
+      isATop.value = scrollController.position.pixels == 0;
+    });
+  }
+
+  @override
+  void onClose() {
+    scrollController.dispose();
+    super.onClose();
+  }
 }
