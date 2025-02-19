@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:perfect_elegance/app/core/widgets/search_card.dart';
 import 'package:perfect_elegance/app/data/extensions/extensions.dart';
+import 'package:perfect_elegance/app/data/models/all_orders_model/customer.dart';
 import 'package:perfect_elegance/app/data/models/all_orders_model/datum.dart';
 import 'package:perfect_elegance/app/data/models/all_orders_model/user.dart';
 import 'package:perfect_elegance/app/data/models/packages_model/datum.dart';
@@ -149,6 +150,13 @@ class ShipmentsView extends GetView<ShipmentsController> {
                             order: OrderDatum(
                               id: packages[index].id,
                               user: User(
+                                id: packages[index].customer!.id,
+                                name: packages[index].customer!.name,
+                                phone: packages[index].customer!.phone,
+                                email: packages[index].customer!.email,
+                                address: packages[index].customer!.address,
+                              ),
+                              customer: OrderCustomer(
                                 id: packages[index].customer!.id,
                                 name: packages[index].customer!.name,
                                 phone: packages[index].customer!.phone,

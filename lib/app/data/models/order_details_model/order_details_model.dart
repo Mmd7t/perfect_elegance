@@ -1,3 +1,4 @@
+import 'customer.dart';
 import 'log.dart';
 import 'product_order.dart';
 import 'user.dart';
@@ -5,6 +6,7 @@ import 'user.dart';
 class OrderDetailsModel {
   int? id;
   User? user;
+  OrderDetailsCustomer? customer;
   String? status;
   int? statusId;
   String? city;
@@ -20,6 +22,7 @@ class OrderDetailsModel {
   OrderDetailsModel({
     this.id,
     this.user,
+    this.customer,
     this.status,
     this.statusId,
     this.city,
@@ -39,6 +42,10 @@ class OrderDetailsModel {
       user: json['user'] == null
           ? null
           : User.fromJson(json['user'] as Map<String, dynamic>),
+      customer: json['customer'] == null
+          ? null
+          : OrderDetailsCustomer.fromJson(
+              json['customer'] as Map<String, dynamic>),
       status: json['status'] as String?,
       statusId: json['status_id'] as int?,
       city: json['city'] as String?,

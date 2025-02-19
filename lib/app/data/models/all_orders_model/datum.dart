@@ -1,8 +1,10 @@
+import 'customer.dart';
 import 'user.dart';
 
 class OrderDatum {
   int? id;
   User? user;
+  OrderCustomer? customer;
   String? status;
   String? city;
   dynamic address;
@@ -11,6 +13,7 @@ class OrderDatum {
   OrderDatum({
     this.id,
     this.user,
+    this.customer,
     this.status,
     this.city,
     this.address,
@@ -22,6 +25,9 @@ class OrderDatum {
         user: json['user'] == null
             ? null
             : User.fromJson(json['user'] as Map<String, dynamic>),
+        customer: json['customer'] == null
+            ? null
+            : OrderCustomer.fromJson(json['customer'] as Map<String, dynamic>),
         status: json['status'] as String?,
         city: json['city'] as String?,
         address: json['address'] as dynamic,

@@ -22,7 +22,6 @@ class NoInternetView extends StatelessWidget {
               "تأكد من تشغيل شبكة Wi-Fi أو البيانات\nالخلوية ثم حاول مرة أخرى."
                   .body(center: true),
               const SizedBox(height: 80),
-              //TODO - Implement This try button
               GlobalButton(
                 onTap: () {},
                 text: "اعادة المحاولة",

@@ -97,7 +97,7 @@ class AccountStatementView extends GetView<AccountStatementController> {
                         "النوع:".bodyMedium(),
                       ],
                       subValues: [
-                        "${transactions[index].documentNumber}"
+                        (transactions[index].documentNumber ?? "--------")
                             .subtitle(color: Colors.black),
                         const SizedBox(height: 5),
                         "${transactions[index].type}"

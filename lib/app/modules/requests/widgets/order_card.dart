@@ -86,7 +86,7 @@ class OrderCard extends GetWidget<RequestsController> {
           children: [
             "user".iconColored(size: 16),
             const SizedBox(width: 8),
-            Expanded(child: "${order.user!.name}".bodyMedium()),
+            Expanded(child: "${order.customer!.name}".bodyMedium()),
           ],
         ),
         const SizedBox(height: 7),
@@ -94,7 +94,7 @@ class OrderCard extends GetWidget<RequestsController> {
           children: [
             "phone".iconColored(size: 16),
             const SizedBox(width: 8),
-            Expanded(child: "${order.user!.phone}".bodyMedium()),
+            Expanded(child: "${order.customer!.phone}".bodyMedium()),
           ],
         ),
         const SizedBox(height: 7),
@@ -102,7 +102,7 @@ class OrderCard extends GetWidget<RequestsController> {
           children: [
             "location".iconColored(size: 16),
             const SizedBox(width: 8),
-            Expanded(child: "${order.city}".caption()),
+            Expanded(child: "${order.customer!.address}".caption()),
           ],
         ),
         const SizedBox(height: 7),

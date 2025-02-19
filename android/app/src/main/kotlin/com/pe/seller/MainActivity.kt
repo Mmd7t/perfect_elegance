@@ -1,4 +1,4 @@
-package com.example.perfect_elegance
+package com.pe.seller
 
 import io.flutter.embedding.android.FlutterActivity
 

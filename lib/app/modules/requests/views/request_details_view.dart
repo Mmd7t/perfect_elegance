@@ -58,18 +58,19 @@ class RequestDetailsView extends GetView<OrderDetailsController> {
                         "اجمالي قيمة المنتجات:".bodyMedium(),
                       ],
                       subValues: [
-                        "${controller.orderData.value.user!.name}"
+                        "${controller.orderData.value.customer!.name}"
                             .subtitle(color: Colors.black),
                         const SizedBox(height: 5),
                         Directionality(
                             textDirection: TextDirection.ltr,
-                            child: "${controller.orderData.value.user!.phone}"
-                                .subtitle(color: Colors.black)),
+                            child:
+                                "${controller.orderData.value.customer!.phone}"
+                                    .subtitle(color: Colors.black)),
                         const SizedBox(height: 5),
                         "${controller.orderData.value.city}"
                             .subtitle(color: Colors.black),
                         const SizedBox(height: 5),
-                        "${controller.orderData.value.user!.address}"
+                        "${controller.orderData.value.customer!.address}"
                             .subtitle(color: Colors.black),
                         const SizedBox(height: 5),
                         "${controller.orderData.value.productsCount}"
