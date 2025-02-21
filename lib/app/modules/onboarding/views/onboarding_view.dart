@@ -34,8 +34,8 @@ class OnboardingView extends GetView<OnboardingController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(
-                    height: 40,
-                    width: 40,
+                    height: Get.size.shortestSide < 600 ? 40 : 60,
+                    width: Get.size.shortestSide < 600 ? 40 : 60,
                     child: "logo.png".assetImage,
                   ),
                   "تطبيق احترافي لأعمال التجارة\nالإلكترونية الخاصة بك"

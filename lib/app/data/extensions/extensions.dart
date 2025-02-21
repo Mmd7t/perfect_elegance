@@ -236,7 +236,9 @@ extension CustomTextStyles on String {
           TextStyle(
             color: color ?? Get.theme.colorScheme.secondary,
             fontWeight: weight ?? FontWeight.bold,
-            fontSize: Get.textTheme.titleLarge!.fontSize! - 4,
+            fontSize: Get.size.shortestSide < 600
+                ? Get.textTheme.titleLarge!.fontSize! - 4
+                : Get.textTheme.titleLarge!.fontSize! - 2,
             fontFamily: 'Cairo',
           ),
         ),
@@ -247,7 +249,9 @@ extension CustomTextStyles on String {
           TextStyle(
             color: color ?? Get.theme.colorScheme.secondary,
             fontWeight: weight ?? FontWeight.bold,
-            fontSize: Get.textTheme.titleMedium!.fontSize! - 2,
+            fontSize: Get.size.shortestSide < 600
+                ? Get.textTheme.titleMedium!.fontSize! - 2
+                : Get.textTheme.titleMedium!.fontSize!,
             fontFamily: 'Cairo',
           ),
         ),
@@ -260,7 +264,9 @@ extension CustomTextStyles on String {
             color: color ?? Colors.black,
             fontFamily: 'Cairo',
             fontWeight: weight ?? FontWeight.w600,
-            fontSize: Get.textTheme.titleSmall!.fontSize!,
+            fontSize: Get.size.shortestSide < 600
+                ? Get.textTheme.titleSmall!.fontSize!
+                : Get.textTheme.titleSmall!.fontSize! + 2,
           ),
         ),
       );
@@ -276,6 +282,9 @@ extension CustomTextStyles on String {
             color: color ?? Constants.grey3,
             fontFamily: 'Cairo',
             height: 1.5,
+            fontSize: Get.size.shortestSide < 600
+                ? Get.textTheme.bodyLarge!.fontSize!
+                : Get.textTheme.bodyLarge!.fontSize! + 2,
             fontWeight: weight,
           ),
         ),
@@ -296,6 +305,9 @@ extension CustomTextStyles on String {
             color: color ?? Constants.grey3,
             overflow: overflow,
             fontFamily: 'Cairo',
+            fontSize: Get.size.shortestSide < 600
+                ? Get.textTheme.bodyMedium!.fontSize!
+                : Get.textTheme.bodyMedium!.fontSize! + 2,
             height: 1.5,
             fontWeight: weight,
           ),

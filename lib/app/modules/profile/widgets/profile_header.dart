@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:perfect_elegance/app/data/constants/constants.dart';
 import 'package:perfect_elegance/app/data/extensions/extensions.dart';
 
@@ -12,7 +13,7 @@ class ProfileHeader extends StatelessWidget {
     return Row(
       children: [
         CircleAvatar(
-          radius: 40,
+          radius: Get.size.shortestSide < 600 ? 40 : 70,
           backgroundColor: Constants.primary,
           child: Padding(
             padding: const EdgeInsets.all(8.0),

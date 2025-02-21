@@ -218,9 +218,7 @@ class HomeView extends GetView<MainController> {
                       Container(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 16, vertical: 16),
-                        decoration: const BoxDecoration(
-                          color: Colors.white,
-                        ),
+                        decoration: const BoxDecoration(color: Colors.white),
                         child: Column(
                           children: [
                             SizedBox(

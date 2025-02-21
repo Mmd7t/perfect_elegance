@@ -132,12 +132,12 @@ class RequestsView extends GetView<RequestsController> {
                     physics: const BouncingScrollPhysics(),
                     padding:
                         const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
                       mainAxisSpacing: 10,
                       crossAxisSpacing: 10,
-                      childAspectRatio: 16 / 15,
+                      childAspectRatio:
+                          Get.size.shortestSide < 600 ? 16 / 15 : 16 / 8,
                     ),
                     itemBuilder: (context, index) {
                       if (index < orders.length) {

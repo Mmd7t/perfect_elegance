@@ -29,8 +29,9 @@ class NotificationsHelper {
 
     var androidInitialize =
         const AndroidInitializationSettings('@mipmap/launcher_icon');
+    var iosInitialize = const DarwinInitializationSettings();
     var initializationsSettings =
-        InitializationSettings(android: androidInitialize);
+        InitializationSettings(android: androidInitialize, iOS: iosInitialize);
     await flutterLocalNotificationsPlugin.initialize(
       initializationsSettings,
       onDidReceiveNotificationResponse: (payload) async {

@@ -16,8 +16,8 @@ class CircularChartWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: Get.width * 0.58,
-      height: Get.width * 0.58,
+      width: Get.size.shortestSide < 600 ? Get.width * 0.58 : Get.width * 0.35,
+      height: Get.size.shortestSide < 600 ? Get.width * 0.58 : Get.width * 0.35,
       child: Stack(
         alignment: Alignment.center,
         children: [

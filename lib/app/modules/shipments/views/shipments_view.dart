@@ -130,12 +130,12 @@ class ShipmentsView extends GetView<ShipmentsController> {
                     physics: const BouncingScrollPhysics(),
                     padding:
                         const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
                       mainAxisSpacing: 10,
                       crossAxisSpacing: 10,
-                      childAspectRatio: 16 / 15.5,
+                      childAspectRatio:
+                          Get.size.shortestSide < 600 ? 16 / 15.5 : 16 / 9,
                     ),
                     itemBuilder: (context, index) {
                       if (index < packages.length) {

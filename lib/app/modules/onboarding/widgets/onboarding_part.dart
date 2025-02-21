@@ -19,7 +19,10 @@ class OnboardingPart extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        image.iconColored(size: Get.width * 0.75),
+        image.iconColored(
+            size: Get.size.shortestSide < 600
+                ? Get.width * 0.75
+                : Get.width * 0.5),
         const SizedBox(height: 15),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),
