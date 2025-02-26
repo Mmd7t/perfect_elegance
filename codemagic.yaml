@@ -1,16 +1,16 @@
 workflows:
   ios-release:
     name: iOS Release Build
-    instance_type: mac_mini_m1 # Use mac_mini_m1 or mac_pro depending on your plan
-    max_build_duration: 60 # Adjust as needed
+    instance_type: mac_mini_m1
+    max_build_duration: 60
 
     environment:
       vars:
         XCODE_WORKSPACE: "Runner.xcworkspace"
         XCODE_SCHEME: "Runner"
         BUNDLE_ID: "com.pe.seller"
-      flutter: stable # Use specific Flutter version if needed
-      xcode: latest # Use the latest available Xcode version
+      flutter: stable
+      xcode: latest
 
     scripts:
       - name: Set iOS minimum deployment target
@@ -32,7 +32,7 @@ workflows:
 
     publishing:
       app_store_connect:
-        api_key: Encrypted(api_key_value) # Use the encrypted value from Codemagic
+        api_key: Encrypted(MIGTAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBHkwdwIBAQQggEP5ja00FUeVfPum43LU3aRdSTJmnx+G1nwfFl5P/H6gCgYIKoZIzj0DAQehRANCAATKZULPGLNn5kb1J5LnlldLWbghqI/hkcHTAmoKbUBGeQwZ2xYHiqVEVExCRwmM+a9td3l/tQNFVhQ8x9Nghp4n)
         key_id: "J2BUVTG7N7"
         issuer_id: "6e3ba3e7-a936-45fb-a6dd-148932e76eb1"
-        submit_to_testflight: true # Set to false if you don’t want automatic submission
+        submit_to_testflight: true
