@@ -32,7 +32,7 @@ workflows:
 
     publishing:
       app_store_connect:
-        api_key: Encrypted(pekey)
+        api_key: $APP_STORE_CONNECT_PRIVATE_KEY
         key_id: "J2BUVTG7N7"
         issuer_id: "6e3ba3e7-a936-45fb-a6dd-148932e76eb1"
         submit_to_testflight: true
