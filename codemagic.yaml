@@ -1,0 +1,4 @@
+scripts:
+  - name: Set iOS minimum deployment target
+    script: |
+      sed -i '' 's/IPHONEOS_DEPLOYMENT_TARGET = 11.0;/IPHONEOS_DEPLOYMENT_TARGET = 13.0;/g' ios/Runner.xcodeproj/project.pbxproj
