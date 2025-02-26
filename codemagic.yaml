@@ -1,4 +1,38 @@
-scripts:
-  - name: Set iOS minimum deployment target
-    script: |
-      sed -i '' 's/IPHONEOS_DEPLOYMENT_TARGET = 11.0;/IPHONEOS_DEPLOYMENT_TARGET = 13.0;/g' ios/Runner.xcodeproj/project.pbxproj
+workflows:
+  ios-release:
+    name: iOS Release Build
+    instance_type: mac_mini_m1 # Use mac_mini_m1 or mac_pro depending on your plan
+    max_build_duration: 60 # Adjust as needed
+
+    environment:
+      vars:
+        XCODE_WORKSPACE: "Runner.xcworkspace"
+        XCODE_SCHEME: "Runner"
+        BUNDLE_ID: "com.pe.seller"
+      flutter: stable # Use specific Flutter version if needed
+      xcode: latest # Use the latest available Xcode version
+
+    scripts:
+      - name: Set iOS minimum deployment target
+        script: |
+          sed -i '' 's/IPHONEOS_DEPLOYMENT_TARGET = 11.0;/IPHONEOS_DEPLOYMENT_TARGET = 13.0;/g' ios/Runner.xcodeproj/project.pbxproj
+          sed -i '' 's/platform :ios, '11.0'/platform :ios, '13.0'/g' ios/Podfile
+      - name: Install dependencies
+        script: |
+          flutter pub get
+          cd ios
+          pod install --repo-update
+      - name: Build iOS App
+        script: |
+          flutter build ipa --release \
+            --no-codesign
+
+    artifacts:
+      - build/ios/ipa/*.ipa
+
+    publishing:
+      app_store_connect:
+        api_key: Encrypted(api_key_value) # Use the encrypted value from Codemagic
+        key_id: "J2BUVTG7N7"
+        issuer_id: "6e3ba3e7-a936-45fb-a6dd-148932e76eb1"
+        submit_to_testflight: true # Set to false if you don’t want automatic submission
