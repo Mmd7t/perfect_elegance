@@ -13,15 +13,15 @@ workflows:
       xcode: latest
 
     scripts:
-      - name: Set iOS minimum deployment target
-        script: |
-          sed -i '' 's/IPHONEOS_DEPLOYMENT_TARGET = 11.0;/IPHONEOS_DEPLOYMENT_TARGET = 13.0;/g' ios/Runner.xcodeproj/project.pbxproj
-          sed -i '' 's/platform :ios, '11.0'/platform :ios, '13.0'/g' ios/Podfile
       - name: Install dependencies
         script: |
           flutter pub get
           cd ios
           pod install --repo-update
+      - name: Set iOS minimum deployment target
+        script: |
+          sed -i '' 's/IPHONEOS_DEPLOYMENT_TARGET = 11.0;/IPHONEOS_DEPLOYMENT_TARGET = 13.0;/g' ios/Runner.xcodeproj/project.pbxproj
+          sed -i '' 's/platform :ios, '11.0'/platform :ios, '13.0'/g' ios/Podfile
       - name: Build iOS App
         script: |
           flutter build ipa --release \
