@@ -20,11 +20,10 @@ workflows:
         script: |
           flutter pub get
           cd ios
-          pod install --repo-update
-      - name: Set iOS minimum deployment target
-        script: |
+          pod install
           sed -i '' "s/# platform :ios, '11.0'/platform :ios, '13.0'/" ios/Podfile
           sed -i '' "s/platform :ios, '11.0'/platform :ios, '13.0'/" ios/Podfile
+          pod install --repo-update
       - name: Build iOS App
         script: |
           flutter build ipa --release \
