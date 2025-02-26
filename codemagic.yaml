@@ -26,8 +26,13 @@ workflows:
           pod install --repo-update
       - name: Build iOS App
         script: |
-          flutter build ipa --release \
-            --no-codesign
+          flutter build ipa --release --no-codesign
+      - name: Publish to App Store
+        script: |
+          xcrun altool --upload-app --type ios \
+            --file build/ios/ipa/*.ipa \
+            --apiKey $APP_STORE_CONNECT_API_KEY \
+            --apiIssuer $APP_STORE_CONNECT_API_ISSUER
 
     artifacts:
       - build/ios/ipa/*.ipa
