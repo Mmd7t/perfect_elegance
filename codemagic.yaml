@@ -32,7 +32,7 @@ workflows:
 
     publishing:
       app_store_connect:
-        api_key: Encrypted(MIGTAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBHkwdwIBAQQggEP5ja00FUeVfPum43LU3aRdSTJmnx+G1nwfFl5P/H6gCgYIKoZIzj0DAQehRANCAATKZULPGLNn5kb1J5LnlldLWbghqI/hkcHTAmoKbUBGeQwZ2xYHiqVEVExCRwmM+a9td3l/tQNFVhQ8x9Nghp4n)
+        api_key: Encrypted(pekey)
         key_id: "J2BUVTG7N7"
         issuer_id: "6e3ba3e7-a936-45fb-a6dd-148932e76eb1"
         submit_to_testflight: true
