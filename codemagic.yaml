@@ -9,8 +9,13 @@ workflows:
         XCODE_WORKSPACE: "Runner.xcworkspace"
         XCODE_SCHEME: "Runner"
         BUNDLE_ID: "com.pe.seller"
+        GIT_REPO: "git@github.com:Mmd7t/perfect_elegance.git"
+        GIT_BRANCH: "main"
       flutter: stable
       xcode: latest
+      groups:
+        - app_store_credentials
+        - github_credentials
 
     scripts:
       - name: Set iOS minimum deployment target
@@ -24,6 +29,13 @@ workflows:
           sed -i '' "s/# platform :ios, '12.0'/platform :ios, '14.0'/" ios/Podfile || true
           sed -i '' "s/platform :ios, '12.0'/platform :ios, '14.0'/" ios/Podfile || true
           pod install --repo-update
+      - name: Push All Changes to GitHub
+        script: |
+          git config --global user.name "Mmd7t"
+          git config --global user.email "mmedhatmostafa3@gmail.com"
+          git add .
+          git commit -m "Automated build: $(date)" || echo "No changes to commit"
+          git push origin $GIT_BRANCH
       - name: Build iOS App
         script: |
           flutter build ipa --release --no-codesign
