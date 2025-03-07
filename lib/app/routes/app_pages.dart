@@ -7,6 +7,7 @@ import 'package:perfect_elegance/app/modules/profile/bindings/account_verified_b
 import 'package:perfect_elegance/app/modules/requests/bindings/add_order_binding.dart';
 import 'package:perfect_elegance/app/modules/requests/bindings/order_details_binding.dart';
 import 'package:perfect_elegance/app/modules/requests/views/add_more_product_view.dart';
+import 'package:perfect_elegance/app/modules/requests/views/add_sales_request_view.dart';
 import 'package:perfect_elegance/app/modules/requests/views/request_details_view.dart';
 import 'package:perfect_elegance/app/modules/shipments/bindings/shipments_details_binding.dart';
 import 'package:perfect_elegance/app/modules/tickets/bindings/ticket_details_binding.dart';
@@ -37,7 +38,7 @@ import '../modules/profile/views/terms_view.dart';
 import '../modules/requests/bindings/requests_binding.dart';
 import '../modules/requests/views/add_customer_view.dart';
 import '../modules/requests/views/add_new_product_view.dart';
-import '../modules/requests/views/add_request_view.dart';
+import '../modules/requests/views/add_purchases_request_view.dart';
 import '../modules/requests/views/requests_view.dart';
 import '../modules/returns/bindings/returns_binding.dart';
 import '../modules/returns/views/returns_view.dart';
@@ -175,8 +176,13 @@ class AppPages {
       binding: OrderDetailsBinding(),
     ),
     GetPage(
-      name: Routes.addRequest,
-      page: () => const AddRequestView(),
+      name: Routes.addPurchasesRequest,
+      page: () => const AddPurchasesRequestView(),
+      binding: AddOrderBinding(),
+    ),
+    GetPage(
+      name: Routes.addSalesRequest,
+      page: () => const AddSalesRequestView(),
       binding: AddOrderBinding(),
     ),
     GetPage(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:perfect_elegance/app/core/enums/enums.dart';
 import 'package:perfect_elegance/app/core/widgets/search_card.dart';
+import 'package:perfect_elegance/app/data/constants/constants.dart';
 import 'package:perfect_elegance/app/data/extensions/extensions.dart';
 import 'package:perfect_elegance/app/data/models/all_orders_model/datum.dart';
 import 'package:perfect_elegance/app/modules/requests/widgets/order_card.dart';
@@ -165,7 +166,49 @@ class RequestsView extends GetView<RequestsController> {
         floatingActionButton: FloatingActionButton(
           shape: const CircleBorder(),
           backgroundColor: Get.theme.primaryColor,
-          onPressed: () => Get.toNamed(Routes.addRequest),
+          onPressed: () {
+            showModalBottomSheet(
+              context: context,
+              isScrollControlled: true,
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
+              ),
+              builder: (context) => Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 30,
+                ),
+                child: SafeArea(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      "اختر نوع الطلبية".title(color: Constants.secondary),
+                      const Divider(
+                        height: 40,
+                        color: Constants.grey4,
+                      ),
+                      ListTile(
+                          onTap: () {
+                            Get.back();
+                            Get.toNamed(Routes.addPurchasesRequest);
+                          },
+                          title: "طلبية مشتريات"
+                              .titleSmall(color: Constants.secondary)),
+                      ListTile(
+                          onTap: () {
+                            Get.back();
+                            Get.toNamed(Routes.addSalesRequest);
+                          },
+                          title: "طلبية مبيعات"
+                              .titleSmall(color: Constants.secondary)),
+                      const SizedBox(height: 10),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          },
+          // Get.toNamed(Routes.addRequest),
           child: const Icon(Icons.add),
         ),
       ),

@@ -18,7 +18,8 @@ class Routes {
   static const String notifications = '/notifications';
   static const String requestDetails = '/request-details';
   static const String addProductsRequest = '/add-procducts-request';
-  static const String addRequest = '/add-request';
+  static const String addPurchasesRequest = '/add-purchases-request';
+  static const String addSalesRequest = '/add-sales-request';
   static const String addCustomer = '/add-customer';
   static const String addNewProduct = '/add-new-product';
   static const String customers = '/customers';

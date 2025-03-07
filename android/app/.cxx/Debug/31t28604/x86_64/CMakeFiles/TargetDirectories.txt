@@ -1,0 +1,2 @@
+D:/Projects/perfect_elegance/android/app/.cxx/Debug/31t28604/x86_64/CMakeFiles/edit_cache.dir
+D:/Projects/perfect_elegance/android/app/.cxx/Debug/31t28604/x86_64/CMakeFiles/rebuild_cache.dir

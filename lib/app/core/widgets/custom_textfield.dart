@@ -21,33 +21,35 @@ class CustomTextField extends StatelessWidget {
   final int maxLines;
   final double? contentPadding;
   final VoidCallback? onTap;
-  const CustomTextField({
-    super.key,
-    required this.hintText,
-    this.prefixIcon,
-    this.suffixText,
-    this.contentPadding,
-    this.onSuffixTap,
-    this.onTap,
-    this.onChanged,
-    this.textInputFormatters,
-    this.onFieldSubmitted,
-    this.suffixIcon,
-    this.maxLines = 1,
-    this.obsecure = false,
-    this.inputType = TextInputType.text,
-    this.textInputAction = TextInputAction.next,
-    this.onSaved,
-    this.validator,
-    this.controller,
-    this.suffixColor,
-  });
+  final String? value;
+  const CustomTextField(
+      {super.key,
+      required this.hintText,
+      this.prefixIcon,
+      this.suffixText,
+      this.contentPadding,
+      this.onSuffixTap,
+      this.onTap,
+      this.onChanged,
+      this.textInputFormatters,
+      this.onFieldSubmitted,
+      this.suffixIcon,
+      this.maxLines = 1,
+      this.obsecure = false,
+      this.inputType = TextInputType.text,
+      this.textInputAction = TextInputAction.next,
+      this.onSaved,
+      this.validator,
+      this.controller,
+      this.suffixColor,
+      this.value});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 2),
       child: TextFormField(
+        initialValue: value,
         onTap: onTap,
         readOnly: onTap != null,
         inputFormatters: textInputFormatters,

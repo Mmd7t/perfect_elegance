@@ -6,6 +6,8 @@ import 'package:perfect_elegance/app/core/theme/theme.dart';
 import 'package:perfect_elegance/app/data/models/city_model/city_model.dart';
 import 'package:perfect_elegance/app/data/models/product_card_model.dart';
 import 'package:perfect_elegance/app/data/models/product_model/product.dart';
+import 'package:perfect_elegance/app/data/models/products_model/product.dart';
+import 'package:perfect_elegance/app/data/models/products_model/products_model.dart';
 import 'package:perfect_elegance/app/data/models/search_customer_model/search_customer_model.dart';
 import 'package:perfect_elegance/app/modules/requests/providers/requests_provider.dart';
 import 'package:perfect_elegance/app/routes/app_pages.dart';
@@ -261,10 +263,28 @@ class AddOrderController extends GetxController {
     }
   }
 
+  RxBool isProductsLoading = false.obs;
+  Rx<ProductsModel> procducts = ProductsModel().obs;
+  getProducts() async {
+    isProductLoading.value = true;
+    final Map<String, dynamic>? res = await provider.getProducts();
+    isProductLoading.value = false;
+    if (res != null) {
+      if (res['code'] == 200) {
+        procducts.value = ProductsModel.fromJson(res['data']);
+      }
+    } else {
+      Ui.errorGetBar(message: "خطأ في السيرفر");
+    }
+  }
+
+  RxList<SalesProduct> chosenProducts = <SalesProduct>[].obs;
+
   @override
   void onReady() {
     super.onReady();
     getCities();
+    getProducts();
   }
 
   @override

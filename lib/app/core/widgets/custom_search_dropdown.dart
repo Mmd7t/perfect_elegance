@@ -83,7 +83,7 @@ class CustomSearchDropdown extends StatelessWidget {
         autoValidateMode: AutovalidateMode.onUserInteraction,
         decoratorProps: DropDownDecoratorProps(
           decoration: CustomInputDecoration.decorate(
-            hintText: hint!,
+            hintText: hint ?? "",
             noBorder: true,
             fillColor: const Color(0xFFF7F8F9),
           ),

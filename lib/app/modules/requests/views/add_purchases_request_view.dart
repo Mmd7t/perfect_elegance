@@ -12,13 +12,13 @@ import 'package:perfect_elegance/app/modules/requests/controllers/add_order_cont
 import 'package:perfect_elegance/app/modules/requests/widgets/customer_section.dart';
 import 'package:perfect_elegance/app/modules/requests/widgets/products_section.dart';
 
-class AddRequestView extends GetView<AddOrderController> {
-  const AddRequestView({super.key});
+class AddPurchasesRequestView extends GetView<AddOrderController> {
+  const AddPurchasesRequestView({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const GlobalAppbar(title: "إنشاء طلبية"),
+      appBar: const GlobalAppbar(title: "إنشاء طلبية مشتريات"),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -134,21 +134,23 @@ class AddRequestView extends GetView<AddOrderController> {
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16)
-            .copyWith(bottom: 25, top: 8),
-        child: GlobalButton(
-          onTap: () {
-            if (controller.addOrderFormKey.currentState!.validate()) {
-              controller.addOrderFormKey.currentState!.save();
-              if (controller.customer.value.id == null) {
-                Ui.errorGetBar(message: "الرجاء اختيار عميل");
-              } else if (controller.products.isEmpty) {
-                Ui.errorGetBar(message: "الرجاء اضافة منتج");
-              } else {
-                controller.addStore();
+            .copyWith(bottom: 5, top: 8),
+        child: SafeArea(
+          child: GlobalButton(
+            onTap: () {
+              if (controller.addOrderFormKey.currentState!.validate()) {
+                controller.addOrderFormKey.currentState!.save();
+                if (controller.customer.value.id == null) {
+                  Ui.errorGetBar(message: "الرجاء اختيار عميل");
+                } else if (controller.products.isEmpty) {
+                  Ui.errorGetBar(message: "الرجاء اضافة منتج");
+                } else {
+                  controller.addStore();
+                }
               }
-            }
-          },
-          text: "اضافة",
+            },
+            text: "إضافة",
+          ),
         ),
       ),
     );

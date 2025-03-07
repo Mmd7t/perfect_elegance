@@ -48,6 +48,38 @@ class RequestsProvider extends ApiProvider {
     }
   }
 
+  // NOTE :- Post Store sales order
+  Future<Map<String, dynamic>?> postStoreSalesOrder({
+    required List products,
+    required String customerId,
+    required double totalPrice,
+    required int totalQty,
+  }) async {
+    Get.log("Products List :: ${jsonEncode(products)}");
+    Response res = await post(
+      'orders/store',
+      {
+        'products': jsonEncode(products),
+        'customer_id': customerId,
+        'totalPrice': totalPrice,
+        'totalQty': totalQty,
+      },
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': 'Bearer ${Get.find<AppServices>().accessToken.value}',
+      },
+    );
+    if (res.status.isServerError || res.status.connectionError) {
+      return null;
+    } else {
+      Get.log(res.statusCode.toString());
+      return {
+        'code': res.statusCode!,
+        'data': res.body as Map<String, dynamic>,
+      };
+    }
+  }
+
   // NOTE :- Post Store Without Deposit
   Future<Map<String, dynamic>?> postInsertProduct({
     required String orderId,
@@ -246,6 +278,23 @@ class RequestsProvider extends ApiProvider {
       return {
         'code': res.statusCode!,
         'data': res.statusCode == 200 ? res.body as List<dynamic> : res.body,
+      };
+    }
+  }
+
+  // NOTE :- Get Products
+  Future<Map<String, dynamic>?> getProducts() async {
+    Response res = await get('products/prompt', headers: {
+      'Accept': 'application/json',
+      'Authorization': 'Bearer ${Get.find<AppServices>().accessToken.value}',
+    });
+    if (res.status.isServerError || res.status.connectionError) {
+      return null;
+    } else {
+      Get.log(res.statusCode.toString());
+      return {
+        'code': res.statusCode!,
+        'data': res.body as Map<String, dynamic>,
       };
     }
   }
