@@ -21,8 +21,8 @@ class AddProductSection extends GetWidget<AddOrderController> {
         ),
         const SizedBox(height: 10),
         Obx(() {
-          if (controller.isProductLoading.value) {
-            return const CircularProgressIndicator();
+          if (controller.isProductsLoading.value) {
+            return const Center(child: CircularProgressIndicator());
           } else if (controller.procducts.value.products.isEmpty) {
             return "لا يوجد منتجات".bodyMedium();
           } else {
@@ -34,7 +34,7 @@ class AddProductSection extends GetWidget<AddOrderController> {
                 onChanged: (value) {
                   if (value != null) {
                     if (!controller.chosenProducts.contains(value)) {
-                      controller.chosenProducts.add(value);
+                      controller.addSalesProduct(value);
                     } else {
                       Fluttertoast.showToast(msg: "عذرا..المنتج موجود بالفعل");
                     }
@@ -44,13 +44,14 @@ class AddProductSection extends GetWidget<AddOrderController> {
             );
           }
         }),
+        const SizedBox(height: 10),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Obx(() {
             if (controller.chosenProducts.isNotEmpty) {
               return Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 15.0, vertical: 15),
+                padding: const EdgeInsets.symmetric(horizontal: 15.0)
+                    .copyWith(bottom: 15),
                 child: DataTable(
                     clipBehavior: Clip.antiAliasWithSaveLayer,
                     headingRowColor:
@@ -85,30 +86,25 @@ class AddProductSection extends GetWidget<AddOrderController> {
                                 .bodyMedium(color: Constants.black3)),
                             DataCell(
                               CustomTextField(
-                                value: controller
-                                    .chosenProducts[index].dollarPurchasingPrice
-                                    .toString(),
+                                controller: controller.priceControllers[
+                                    controller
+                                        .chosenProducts[index].product!.sku!]!,
                                 hintText: "",
                                 onChanged: (value) {
-                                  Get.log(value!);
-                                  controller.chosenProducts[index]
-                                          .dollarPurchasingPrice =
-                                      double.parse(value);
+                                  if (value != null && value.isNotEmpty) {
+                                    controller.chosenProducts[index]
+                                            .dollarPurchasingPrice =
+                                        double.parse(value);
+                                  }
                                 },
                               ),
-                              // controller.chosenProducts[index]
-                              //           .dollarPurchasingPrice !=
-                              //       null
-                              //   ? "${controller.chosenProducts[index].dollarPurchasingPrice!}"
-                              //       .bodyMedium(color: Constants.black3)
-                              //   : "".body()
                             ),
                             DataCell(
                               IconButton(
                                 icon: "delete"
                                     .iconColored(color: Constants.cancel),
                                 onPressed: () {
-                                  controller.chosenProducts.removeAt(index);
+                                  controller.deleteSalesProduct(index);
                                 },
                               ),
                             )

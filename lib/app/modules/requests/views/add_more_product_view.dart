@@ -5,7 +5,7 @@ import 'package:perfect_elegance/app/core/widgets/global_button.dart';
 import 'package:perfect_elegance/app/core/widgets/search_card.dart';
 import 'package:perfect_elegance/app/data/extensions/extensions.dart';
 import 'package:perfect_elegance/app/modules/requests/controllers/order_details_controller.dart';
-import 'package:perfect_elegance/app/modules/requests/widgets/product_card.dart';
+import 'package:perfect_elegance/app/modules/requests/widgets/product_table.dart';
 
 class AddMoreProductView extends GetView<OrderDetailsController> {
   const AddMoreProductView({super.key});
@@ -58,19 +58,7 @@ class AddMoreProductView extends GetView<OrderDetailsController> {
                     if (controller.addOrderController.products.isEmpty) {
                       return const SizedBox();
                     } else {
-                      return AspectRatio(
-                        aspectRatio: 15 / 18,
-                        child: PageView.builder(
-                          itemBuilder: (context, index) => Padding(
-                            padding: const EdgeInsets.all(12.0),
-                            child: ProductCard(
-                                product: controller
-                                    .addOrderController.products[index]),
-                          ),
-                          itemCount:
-                              controller.addOrderController.products.length,
-                        ),
-                      );
+                      return const ProductTable();
                     }
                   }
                 }),

@@ -117,7 +117,7 @@ class MainView extends GetView<MainController> {
                                             const SizedBox(height: 2),
                                             controller
                                                 .appServices.navBarTitles[index]
-                                                .button(
+                                                .labelMedium(
                                               color: controller.appServices
                                                           .currentIndex.value ==
                                                       index

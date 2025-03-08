@@ -199,7 +199,7 @@ class RequestsView extends GetView<RequestsController> {
                             Get.back();
                             Get.toNamed(Routes.addSalesRequest);
                           },
-                          title: "طلبية مبيعات"
+                          title: "طلبية تسليم فوري"
                               .titleSmall(color: Constants.secondary)),
                       const SizedBox(height: 10),
                     ],

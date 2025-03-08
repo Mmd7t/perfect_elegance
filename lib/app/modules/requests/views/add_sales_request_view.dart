@@ -13,7 +13,7 @@ class AddSalesRequestView extends GetView<AddOrderController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const GlobalAppbar(title: "إنشاء طلبية مبيعات"),
+      appBar: const GlobalAppbar(title: "إنشاء طلبية التسليم الفوري"),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -41,7 +41,7 @@ class AddSalesRequestView extends GetView<AddOrderController> {
                 } else if (controller.chosenProducts.isEmpty) {
                   Ui.errorGetBar(message: "الرجاء اضافة منتج");
                 } else {
-                  // controller.addStore();
+                  controller.addSalesStore();
                 }
               }
             },

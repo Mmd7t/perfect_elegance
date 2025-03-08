@@ -57,7 +57,7 @@ class RequestsProvider extends ApiProvider {
   }) async {
     Get.log("Products List :: ${jsonEncode(products)}");
     Response res = await post(
-      'orders/store',
+      'orders/prompt-store',
       {
         'products': jsonEncode(products),
         'customer_id': customerId,

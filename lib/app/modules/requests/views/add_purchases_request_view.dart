@@ -132,10 +132,10 @@ class AddPurchasesRequestView extends GetView<AddOrderController> {
           ),
         ),
       ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16)
-            .copyWith(bottom: 5, top: 8),
-        child: SafeArea(
+      bottomNavigationBar: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16)
+              .copyWith(bottom: 25, top: 8),
           child: GlobalButton(
             onTap: () {
               if (controller.addOrderFormKey.currentState!.validate()) {

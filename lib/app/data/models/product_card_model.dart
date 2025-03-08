@@ -2,12 +2,12 @@ class ProductCardModel {
   final int? id;
   final String? sku;
   final String? name;
-  final int? qty;
-  final double? dollarPurchasingPrice;
-  final double? dinarSellingPrice;
+  int? qty;
+  double? dollarPurchasingPrice;
+  double? dinarSellingPrice;
   double? totalPrice;
-  final String? size;
-  final String? color;
+  String? size;
+  String? color;
 
   ProductCardModel({
     this.id,

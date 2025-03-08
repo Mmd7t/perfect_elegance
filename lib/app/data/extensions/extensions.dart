@@ -339,6 +339,17 @@ extension CustomTextStyles on String {
         ),
       );
 
+  Text labelMedium({Color? color, FontWeight? weight}) => Text(
+        this,
+        style: Get.textTheme.labelMedium!.merge(
+          TextStyle(
+            color: color ?? Constants.grey3,
+            fontFamily: 'Cairo',
+            fontWeight: weight ?? FontWeight.normal,
+          ),
+        ),
+      );
+
   Text button({Color? color, TextDecoration? decor}) => Text(
         this,
         style: Get.textTheme.labelLarge!.merge(

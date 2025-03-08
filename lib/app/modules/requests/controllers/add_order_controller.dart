@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -88,22 +90,44 @@ class AddOrderController extends GetxController {
   RxList<ProductCardModel> products = <ProductCardModel>[].obs;
   RxInt currentProductIndex = 0.obs;
 
-  setProduct(ProductCardModel productCardModel) {
-    products[products.indexWhere(
-        (element) => element.id == productCardModel.id)] = productCardModel;
-    products = products.toSet().toList().obs;
+  Map<String, TextEditingController> textControllers = {};
+
+  void addPurchaseProduct(ProductCardModel product) {
+    if (!products.contains(product) &&
+        products.where((e) => e.sku == product.sku).isEmpty) {
+      products.add(product);
+      products.toSet().toList().obs;
+
+      // Initialize controllers for each field
+      textControllers["${product.sku!}_size"] =
+          TextEditingController(text: product.size ?? "");
+      textControllers["${product.sku!}_color"] =
+          TextEditingController(text: product.color ?? "");
+      textControllers["${product.sku!}_purchasePrice"] =
+          TextEditingController(text: product.dollarPurchasingPrice.toString());
+      textControllers["${product.sku!}_sellingPrice"] =
+          TextEditingController(text: product.dinarSellingPrice.toString());
+      textControllers["${product.sku!}_quantity"] =
+          TextEditingController(text: product.qty.toString());
+    }
   }
 
-  removeProduct(ProductCardModel productCardModel) {
-    products.removeWhere((element) => element.id == productCardModel.id);
-    products = products.toSet().toList().obs;
-    Fluttertoast.showToast(
-      msg: "تم حذف المنتج",
-      toastLength: Toast.LENGTH_SHORT,
-      gravity: ToastGravity.BOTTOM,
-      timeInSecForIosWeb: 1,
-      fontSize: 16.0,
-    );
+  void removePurchaseProduct(int index) {
+    String sku = products[index].sku!;
+
+    // Dispose controllers related to this product
+    textControllers["${sku}_size"]?.dispose();
+    textControllers["${sku}_color"]?.dispose();
+    textControllers["${sku}_purchasePrice"]?.dispose();
+    textControllers["${sku}_sellingPrice"]?.dispose();
+    textControllers["${sku}_quantity"]?.dispose();
+
+    textControllers.remove("${sku}_size");
+    textControllers.remove("${sku}_color");
+    textControllers.remove("${sku}_purchasePrice");
+    textControllers.remove("${sku}_sellingPrice");
+    textControllers.remove("${sku}_quantity");
+    products.removeAt(index);
   }
 
   searchForProduct() async {
@@ -125,28 +149,40 @@ class AddOrderController extends GetxController {
           );
         } else {
           product.value = Product.fromJson(result['data']);
-          products.add(
-            ProductCardModel(
-              id: product.value.id!,
-              sku: product.value.sku!,
-              name: product.value.name!,
-              qty: 0,
-              dollarPurchasingPrice: 0.0,
-              dinarSellingPrice: 0.0,
-              totalPrice: 0.0,
-              size: "",
-              color: "",
-            ),
-          );
-          products = products.toSet().toList().obs;
-          skuController.clear();
-          Fluttertoast.showToast(
-            msg: "تم اضافة المنتج",
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.BOTTOM,
-            timeInSecForIosWeb: 1,
-            fontSize: 16.0,
-          );
+          log("Condition :: ${products.where((e) => e.sku == product.value.sku).isEmpty}");
+          if (products.where((e) => e.sku == product.value.sku).isEmpty) {
+            addPurchaseProduct(
+              ProductCardModel(
+                id: product.value.id!,
+                sku: product.value.sku!,
+                name: product.value.name!,
+                qty: 0,
+                dollarPurchasingPrice: 0.0,
+                dinarSellingPrice: 0.0,
+                totalPrice: 0.0,
+                size: "",
+                color: "",
+              ),
+            );
+            skuController.clear();
+            Fluttertoast.showToast(
+              msg: "تم اضافة المنتج",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              fontSize: 16.0,
+            );
+          } else {
+            skuController.clear();
+            Fluttertoast.showToast(
+              msg: "المنتج مضاف بالفعل",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              fontSize: 16.0,
+            );
+          }
+
           Get.log("Products List :: ${products.toString()}");
         }
       }
@@ -171,28 +207,40 @@ class AddOrderController extends GetxController {
       if (res['code'] == 200) {
         Get.back();
         product.value = Product.fromJson(res['data']['product']);
-        products.add(
-          ProductCardModel(
-            id: product.value.id!,
-            sku: product.value.sku!,
-            name: product.value.name!,
-            qty: 0,
-            dollarPurchasingPrice: 0.0,
-            dinarSellingPrice: 0.0,
-            totalPrice: 0.0,
-            size: "",
-            color: "",
-          ),
-        );
-        products = products.toSet().toList().obs;
-        skuController.clear();
-        Fluttertoast.showToast(
-          msg: "تم اضافة المنتج",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          fontSize: 16.0,
-        );
+        log("Condition :: ${products.where((e) => e.sku == product.value.sku).isEmpty}");
+        if (products.where((e) => e.sku == product.value.sku).isEmpty) {
+          addPurchaseProduct(
+            ProductCardModel(
+              id: product.value.id!,
+              sku: product.value.sku!,
+              name: product.value.name!,
+              qty: 0,
+              dollarPurchasingPrice: 0.0,
+              dinarSellingPrice: 0.0,
+              totalPrice: 0.0,
+              size: "",
+              color: "",
+            ),
+          );
+          skuController.clear();
+          Fluttertoast.showToast(
+            msg: "تم اضافة المنتج",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            fontSize: 16.0,
+          );
+        } else {
+          skuController.clear();
+          Fluttertoast.showToast(
+            msg: "المنتج مضاف بالفعل",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            fontSize: 16.0,
+          );
+        }
+
         Get.log("Products List :: ${products.toString()}");
       } else {
         Ui.errorGetBar(message: res['data']);
@@ -263,12 +311,37 @@ class AddOrderController extends GetxController {
     }
   }
 
+  addSalesStore() async {
+    Ui.loadingDialog();
+    final Map<String, dynamic>? res = await provider.postStoreSalesOrder(
+      products: chosenProducts.map((e) => e.toJson()).toList(),
+      customerId: customer.value.id.toString(),
+      totalPrice: chosenProducts.fold(0, (sum, product) {
+        return sum + (product.dollarPurchasingPrice ?? 0.0);
+      }),
+      totalQty: products.fold(0, (sum, product) {
+        return sum + (product.qty ?? 0);
+      }),
+    );
+    Get.back();
+    if (res != null) {
+      if (res['code'] == 200) {
+        Get.back();
+        Ui.successGetBar(message: "تم اضافة الطلب بنجاح");
+      } else {
+        Ui.errorGetBar(message: res['data']);
+      }
+    } else {
+      Ui.errorGetBar(message: "خطأ في السيرفر");
+    }
+  }
+
   RxBool isProductsLoading = false.obs;
   Rx<ProductsModel> procducts = ProductsModel().obs;
   getProducts() async {
-    isProductLoading.value = true;
+    isProductsLoading.value = true;
     final Map<String, dynamic>? res = await provider.getProducts();
-    isProductLoading.value = false;
+    isProductsLoading.value = false;
     if (res != null) {
       if (res['code'] == 200) {
         procducts.value = ProductsModel.fromJson(res['data']);
@@ -279,6 +352,22 @@ class AddOrderController extends GetxController {
   }
 
   RxList<SalesProduct> chosenProducts = <SalesProduct>[].obs;
+  Map<String, TextEditingController> priceControllers = {};
+
+  void addSalesProduct(SalesProduct product) {
+    if (!chosenProducts.contains(product)) {
+      chosenProducts.add(product);
+      priceControllers[product.product!.sku!] =
+          TextEditingController(text: product.dollarPurchasingPrice.toString());
+    }
+  }
+
+  void deleteSalesProduct(int index) {
+    String sku = chosenProducts[index].product!.sku!;
+    priceControllers.remove(sku);
+    priceControllers[sku]?.dispose();
+    chosenProducts.removeAt(index);
+  }
 
   @override
   void onReady() {
@@ -293,5 +382,13 @@ class AddOrderController extends GetxController {
     phoneController.dispose();
     skuController.dispose();
     noteController.dispose();
+    for (var controller in priceControllers.values) {
+      controller.dispose();
+    }
+    priceControllers.clear();
+    for (var controller in textControllers.values) {
+      controller.dispose();
+    }
+    textControllers.clear();
   }
 }
